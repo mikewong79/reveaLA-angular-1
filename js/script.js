@@ -1,4 +1,4 @@
-var LaApp = angular.module ('LaApp', ["ui.router"]);
+var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap"]);
 
 LaApp.config(function($stateProvider, $urlRouterProvider) {
   // For any unmatched url, redirect to start modal
