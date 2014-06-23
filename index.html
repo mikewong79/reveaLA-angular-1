@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html x-ng-app="LaApp">
 <head>
+		<title>ReveaLA</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
 		<script src="js/script.js"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsrce8xS9a6NSyqRQBhP-TmGBQGSCL_aE&sensor=true"></script>
 		<script src="js/angular-ui-router.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script src="js/angular-strap.min.js"></script>
 		<script src="js/angular-strap.tpl.min.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsrce8xS9a6NSyqRQBhP-TmGBQGSCL_aE&sensor=true"></script>
+		<script src="js/skrollr.js"></script>
 </head>
 
-<body>
+<body x-ng-controller="LaController">
+
+	<div class="navbar" role="navigation" bs-navbar>
+			<div class="navbar-header">
+				<a class="navbar-brand" data-match-route="/start" href="#/start">ReveaLA</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right" ng-hide="currentUserSignedIn">
+				<li data-match-route="/signup"><a href="#/signup">Sign up</a></li>
+				<li data-match-route="/signin"><a href="#/signin">Sign in</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" ng-show="currentUserSignedIn">
+				Sign Out
+			</ul>
+	</div>
 
 	<div ui-view></div>
 

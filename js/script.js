@@ -1,4 +1,4 @@
-var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap"]);
+var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap", 'mgcrea.ngStrap.modal']);
 
 LaApp.config(function($stateProvider, $urlRouterProvider) {
   // For any unmatched url, redirect to start modal
@@ -27,11 +27,29 @@ LaApp.config(function($stateProvider, $urlRouterProvider) {
 	  	templateUrl: "../reveaLA-angular/partials/tutorial.html"
 	  })
 	  .state("tourtype", {
-	  	url: "tourtype",
+	  	url: "/tourtype",
 	  	templateUrl: "../reveaLA-angular/partials/tourtype.html"
 	  })
 	  .state("found", {
-	  	url: "found",
+	  	url: "/found",
 	  	templateUrl: "../reveaLA-angular/partials/found.html"
 	  })
 });
+
+LaApp.controller('LaController', function ($scope) {
+
+	function skrollr() {
+    var s = skrollr.init();
+	};  
+
+	function login(){
+	    var onSuccessCallback = function(data) {
+	        $rootScope.currentUserSignedIn = true;
+	    };
+	    // Login function to the server comes here
+	    $location.path('/map')
+	};
+
+});
+
+	
