@@ -36,11 +36,31 @@ LaApp.config(function($stateProvider, $urlRouterProvider) {
 	  })
 });
 
+LaApp.factory('User', ['$resource', function($resource) {
+  return $resource('107.170.214.225/users/:id',
+     {id: '@id'},
+     {update: { method: 'PUT'}});
+}]);
+
 LaApp.controller('LaController', function ($scope) {
 
 	function skrollr() {
     var s = skrollr.init();
-	};  
+	};
+
+	$scope.newUser = function() {
+		$scope.user = {};
+	}
+
+	$scope.addUser = function() {
+		$http.post('107.170.214.225/users', {'user': $scope.user})
+		.success(function(response, status, headers, config) {
+			$scope.users.push(response.user);
+		})
+		.error(function(response, status, headers, config) {
+			$scope.error_message = response.error_message;
+		});
+	}
 
 	function login(){
 	    var onSuccessCallback = function(data) {
@@ -51,5 +71,3 @@ LaApp.controller('LaController', function ($scope) {
 	};
 
 });
-
-	
