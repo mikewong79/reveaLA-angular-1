@@ -1,3 +1,7 @@
+
+.navbar {
+	background-color: lightblue;
+}
 .row {
   background-repeat: no-repeat;
 }
@@ -86,7 +90,7 @@
 .navigation .navbar {
 	background-color: black;
   margin-bottom: 0px;
-} 
+}
 
 .navbar a {
   color: white;
@@ -96,20 +100,15 @@
   color: grey;
 }
 
-#map-container {
+.angular-google-map-container {
   position:absolute;
   width:auto;
   height: auto;
-  top:45px;
+  top:50px;
   left:0;
   right:0;
   bottom:0;
   img {
     max-width: none;
   }
- }
-
- #map-canvas {
-  height:100%;
-  width:100%;
- }
+}
