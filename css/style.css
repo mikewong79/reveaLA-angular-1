@@ -1,6 +1,105 @@
+
 .navbar {
 	background-color: lightblue;
 }
+.row {
+  background-repeat: no-repeat;
+}
+
+#row1 {
+  background-image: url("../images/beach_postcard.png");
+  background-size: 100%;
+  margin-left: 0px;
+  margin-top: 25px;
+  height: 675px;
+}
+
+#start-textbox1 {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 25%;
+}
+
+#logo {
+  text-align: center;
+  font-size: 100px;
+}
+
+#logo a {
+  color: black;
+}
+
+#logo a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+#row2 {
+/*  background-color: #F5F4D3;*/
+  height: 680px;
+  background-image: url("../images/wilshire_postcard.png");
+  background-size: 100%;
+}
+
+#start-textbox2 {
+  width: 90%;
+  margin: 10% 5%;
+  text-align: center;
+}
+
+.tutorial-box {
+  width: 30%;
+  display: inline-block;
+}
+
+#tutorial-3 {
+  float: right;
+}
+
+#tutorial-1 {
+  float: left;
+}
+
+#row3 {
+  background-image: url("../images/hollywood_postcard.png");
+  margin-left: 0px;
+  background-size: 100%;
+  height: 680px;
+}
+
+#start-textbox3 {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 13%;
+  text-align: center;
+  font-size: 40px;
+}
+
+#start-textbox3 a {
+  color: black;
+}
+
+#start-textbox3 a:hover {
+  color: white;
+}
+
+#get-started {
+  font-size: 70px;
+}
+
+.navigation .navbar {
+	background-color: black;
+  margin-bottom: 0px;
+}
+
+.navbar a {
+  color: white;
+}
+
+.navbar a:hover {
+  color: grey;
+}
+
 .angular-google-map-container {
   position:absolute;
   width:auto;
