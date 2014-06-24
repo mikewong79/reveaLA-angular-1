@@ -1,16 +1,13 @@
 <div id="signin-background">
 	<div id="signin-container">
-		<h1>Sign In</h1>
+		<h1 id="signin-header">Sign In</h1>
 		<form name="signIn" novalidate>
-			Username: 
-			<br>
+			<p>Username:</p>
 			<input type="text">
-			<br>
-			Password: 
-			<br>
+			<p>Password:</p>
 			<input type="password">
 			<br>
-			<button type="submit" ng-click="login()">Submit</button>
+			<button id="signin-submit" type="submit" ng-click="login()">Submit</button>
 		</form>
 	</div>
 </div>
