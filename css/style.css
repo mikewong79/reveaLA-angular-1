@@ -111,8 +111,9 @@
 /* signin.html styling */
 
 #signin-background {
-  background-image: url("../images/santa_monica.png");
+  background-image: url("../images/venice.png");
   background-size: cover;
+  background-position: center center;
   height: 700px;
 }
 
@@ -121,14 +122,16 @@
   padding-top: 25%;
   width: 50%;
   text-align: center;
+  background-color: white;
 }
 
 /* signup.html styling */
 
 #signup-background {
-  background-image: url("../images/olverast_postcard.png");
+  background-image: url("../images/lifeguard.png");
   background-size: cover;
-  height: 600px;
+  background-position: center center;
+  height: 750px;
 }
 
 #signup-container {
