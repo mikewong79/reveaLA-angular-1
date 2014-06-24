@@ -1,16 +1,12 @@
 var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap", 'mgcrea.ngStrap.modal', 'google-maps', 'ngResource']);
 
-// LaApp.config(['$httpProvider', function($httpProvider) {
-//     var authToken = angular.element("meta[name=\"csrf-token\"]").attr("content");
-//     var defaults = $httpProvider.defaults.headers;
+LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  var defaults = $httpProvider.defaults.headers;
 
-//     defaults.common["X-CSRF-TOKEN"] = authToken;
-//     defaults.patch = defaults.patch || {};
-//     defaults.patch['Content-Type'] = 'application/json';
-//     defaults.common['Accept'] = 'application/json';
-// }]);
+  defaults.patch = defaults.patch || {};
+  defaults.patch['Content-Type'] = 'application/json';
+  defaults.common['Accept'] = 'application/json';
 
-LaApp.config(function($stateProvider, $urlRouterProvider) {
   // For any unmatched url, redirect to start modal
   $urlRouterProvider.otherwise("/start");
 
@@ -27,7 +23,7 @@ LaApp.config(function($stateProvider, $urlRouterProvider) {
 		.state("signup", {
 			url: "/signup",
 			templateUrl: "../reveaLA-angular/partials/signup.html",
-      controller: 'UserCtrl'
+      controller: 'NewUserCtrl'
 		})
 		.state("signin", {
 			url: "/signin",
@@ -48,8 +44,9 @@ LaApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 LaApp.factory('User', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/users/',
-     { method: 'GET'});
+  return $resource('http://107.170.214.225/users/:id',
+    {id: '@id'},
+    {update: { method: 'PATCH'}});
 }]);
 
 LaApp.controller('LaController', function ($scope) {
@@ -119,7 +116,7 @@ LaApp.controller('LaController', function ($scope) {
 	},30000);
 });
 
-LaApp.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
+LaApp.controller('NewUserCtrl', ['$scope', 'User', '$state', function($scope, User, $state) {
     $scope.users= [];
 
     $scope.newUser = new User();
@@ -130,8 +127,7 @@ LaApp.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
 
     $scope.saveUser = function () {
       $scope.newUser.$save(function(user) {
-        $scope.users.push(user)
-        $scope.newUser = new User();
+        $state.go('start');
       });
     }
 
