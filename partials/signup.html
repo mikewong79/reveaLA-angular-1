@@ -2,20 +2,36 @@
 
 	<div id="signup-container">
 		<h1>Sign Up</h1>
+		<form ng-submit="saveUser();" class="form-group">
+      <div >
+        <label for="name">
+          Name:
+          <input ng-model="newUser.name" name="name" class="form-control">
+        </label>
 
-		<form name="signUp" novalidate>
-			Name: <br>
-			<input type="text"><br>
-			Username: <br>
-			<input type="text"><br>
-			Email: <br>
-			<input type="text"><br>
-			Password: <br>
-			<input type="password"><br>
-			Password Confirmation: <br>
-			<input type="password"><br>
-			<button type="submit">Submit</button>
-		</form>
+        <label for="username">
+          Username:
+          <input ng-model="newUser.username" name="username" class="form-control">
+        </label>
+
+        <label for="email">
+          Email:
+          <input ng-model="newUser.email" name="email" class="form-control">
+        </label>
+
+        <label for="password">
+          Password:
+          <input ng-model="newUser.password" name="password" class="form-control">
+        </label>
+
+        <label for="passwordConfirmation">
+          Password Confirmation:
+          <input ng-model="newUser.password_confirmation" name="passwordConfirmation" class="form-control">
+        </label>
+      </div>
+      <div class="padding">
+        <button type="submit" class="button button-block button-positive">Save!</button>
+      </div>
+    </form>
 	</div>
-{{ users }}
 </div>
