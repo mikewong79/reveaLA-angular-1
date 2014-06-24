@@ -16,6 +16,7 @@
 }
 
 /* start.html styling */
+
 .row {
   background-repeat: no-repeat;
 }
@@ -118,7 +119,30 @@
 
 /* signin.html styling */
 
+#signin-background {
+  background-image: url("../images/santamonica_postcard.png");
+  background-size: cover;
+  height: 700px;
+}
+
 #signin-container {
-  margin: 25%;
+  margin: 0 auto;
+  padding-top: 25%;
   width: 50%;
+  text-align: center;
+}
+
+/* signup.html styling */
+
+#signup-background {
+  background-image: url("../images/olverast_postcard.png");
+  background-size: cover;
+  height: 600px;
+}
+
+#signup-container {
+  margin: 0 auto;
+  padding-top: 10%;
+  width: 50%;
+  text-align: center;
 }

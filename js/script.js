@@ -98,13 +98,13 @@ LaApp.controller('LaController', function ($scope) {
 			handleNoGeolocation(browserSupportFlag);
 		}
 
-		function handleNoGeolocation(errorFlag) {
-			if (errorFlag == true) {
-				alert("Geolocation service failed.");
+		// function handleNoGeolocation(errorFlag) {
+		// 	if (errorFlag == true) {
+		// 		alert("Geolocation service failed.");
 
-			} else {
-				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
-			}
-		}
+		// 	} else {
+		// 		alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
+		// 	}
+		// }
 	},30000);
 });
