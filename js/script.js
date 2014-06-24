@@ -14,7 +14,8 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 		.state("map", {
 			url: "/map",
-			templateUrl: "../reveaLA-angular/partials/map.html"
+			templateUrl: "../reveaLA-angular/partials/map.html",
+			controller: 'MapCtrl'
 		})
 		.state("start", {
 			url: "/start",
@@ -27,7 +28,8 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		})
 		.state("signin", {
 			url: "/signin",
-			templateUrl: "../reveaLA-angular/partials/signin.html"
+			templateUrl: "../reveaLA-angular/partials/signin.html",
+			controller: 'SignInCtrl'
 		})
 		.state("tutorial", {
 			url: "/tutorial",
@@ -43,25 +45,18 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		});
 });
 
-LaApp.factory('User', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/users/:id',
-    {id: '@id'},
-    {update: { method: 'PATCH'}});
-}]);
-
 LaApp.controller('LaController', function ($scope) {
-
 	function skrollr() {
     var s = skrollr.init();
 	};
+});
 
-	function login(){
-		var onSuccessCallback = function(data) {
-			$rootScope.currentUserSignedIn = true;
-		};
-		// Login function to the server comes here
-		$location.path('/map');
-	}
+LaApp.factory('Spot', ['$resource', function($resource) {
+  return $resource('http://107.170.214.225/spots/',
+    {update: { method: 'GET'}});
+}]);
+
+LaApp.controller('MapCtrl', function ($scope) {
 
 	$scope.map = {
     control : {},
@@ -116,53 +111,70 @@ LaApp.controller('LaController', function ($scope) {
 	},30000);
 });
 
+LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
+  // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
+	function login(){
+		var onSuccessCallback = function(data) {
+			$rootScope.currentUserSignedIn = true;
+		};
+		// Login function to the server comes here
+		$location.path('/map');
+	};
+}]);
+
+LaApp.factory('User', ['$resource', function($resource) {
+  return $resource('http://107.170.214.225/users/:id',
+    {id: '@id'},
+    {update: { method: 'PATCH'}});
+}]);
+
 LaApp.controller('NewUserCtrl', ['$scope', 'User', '$state', function($scope, User, $state) {
-    $scope.users= [];
+  $scope.users= [];
 
-    $scope.newUser = new User();
+  $scope.newUser = new User();
 
-    User.query(function(users) {
-      $scope.users = users;
-   });
+  User.query(function(users) {
+    $scope.users = users;
+ 	});
 
-    $scope.saveUser = function () {
-      $scope.newUser.$save(function(user) {
-        $state.go('start');
-      });
-    }
+  $scope.saveUser = function () {
+    $scope.newUser.$save(function(user) {
+      $state.go('start');
+    });
+  }
 
-    // $scope.deleteYogurt = function (user) {
-    //   yogurt.$delete(function() {
-    //     position = $scope.users.indexOf(user);
-    //     $scope.users.splice(position, 1);
-    //   }, function(errors) {
-    //     $scope.errors = errors.data
-    //   });
-    // }
+  // $scope.deleteYogurt = function (user) {
+  //   yogurt.$delete(function() {
+  //     position = $scope.users.indexOf(user);
+  //     $scope.users.splice(position, 1);
+  //   }, function(errors) {
+  //     $scope.errors = errors.data
+  //   });
+  // }
 
-    // $scope.showYogurt = function(user) {
-    //   yogurt.details = true;
-    //   yogurt.editing = false;
-    // }
+  // $scope.showYogurt = function(user) {
+  //   yogurt.details = true;
+  //   yogurt.editing = false;
+  // }
 
-    // $scope.hideYogurt = function(user) {
-    //   yogurt.details = false;
-    // }
+  // $scope.hideYogurt = function(user) {
+  //   yogurt.details = false;
+  // }
 
-    // $scope.editYogurt = function(user) {
-    //   yogurt.editing = true;
-    //   yogurt.details = false;
-    // }
+  // $scope.editYogurt = function(user) {
+  //   yogurt.editing = true;
+  //   yogurt.details = false;
+  // }
 
-    // $scope.updateYogurt = function(user) {
-    //   yogurt.$update(function() {
-    //     yogurt.editing = false;
-    //   }, function(errors) {
-    //     $scope.errors = errors.data
-    //   });
-    // }
+  // $scope.updateYogurt = function(user) {
+  //   yogurt.$update(function() {
+  //     yogurt.editing = false;
+  //   }, function(errors) {
+  //     $scope.errors = errors.data
+  //   });
+  // }
 
-    $scope.clearErrors = function() {
-      $scope.errors = null;
-    }
+  $scope.clearErrors = function() {
+    $scope.errors = null;
+  }
 }])

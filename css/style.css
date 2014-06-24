@@ -115,14 +115,39 @@
   background-size: cover;
   background-position: center center;
   height: 700px;
+  position: relative;
 }
 
 #signin-container {
-  margin: 0 auto;
-  padding-top: 25%;
-  width: 50%;
+  margin-top: 10%;
+  margin-left: 62%;
+  width: 30%;
+  height: 50%;
   text-align: center;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  position: absolute;
+}
+
+@media only screen 
+and (max-width : 768px) {
+  #signin-container {
+    width: 60%;
+    margin: 20% 20% 20% 20%;
+  }
+}
+
+#signin-header {
+  padding: 25px 0 25px 0;
+  font-size: 3.5em;
+}
+
+#signin-container p {
+  margin-top: 10px;
+}
+
+#signin-submit {
+  margin-top: 10px;
 }
 
 /* signup.html styling */
@@ -132,11 +157,25 @@
   background-size: cover;
   background-position: center center;
   height: 750px;
+  position: relative;
 }
 
 #signup-container {
-  margin: 0 auto;
-  padding-top: 10%;
-  width: 50%;
+  margin-top: 7%;
+  margin-left: 65%;
+  width: 30%;
+  height: 65%;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  position: absolute;
+}
+
+#signup-header {
+  padding: 15px 0 15px 0;
+  font-size: 3.5em;
+}
+
+#signup-submit {
+  margin-top: 10px;
 }
