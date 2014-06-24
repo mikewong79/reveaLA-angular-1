@@ -12,7 +12,7 @@ var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap", 'mgcrea.ngSt
 
 LaApp.config(function($stateProvider, $urlRouterProvider) {
   // For any unmatched url, redirect to start modal
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/start");
 
   // Sets up the states
   $stateProvider
