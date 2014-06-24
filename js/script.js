@@ -1,8 +1,18 @@
-var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap", 'mgcrea.ngStrap.modal', 'google-maps']);
+var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap", 'mgcrea.ngStrap.modal', 'google-maps', 'ngResource']);
+
+// LaApp.config(['$httpProvider', function($httpProvider) {
+//     var authToken = angular.element("meta[name=\"csrf-token\"]").attr("content");
+//     var defaults = $httpProvider.defaults.headers;
+
+//     defaults.common["X-CSRF-TOKEN"] = authToken;
+//     defaults.patch = defaults.patch || {};
+//     defaults.patch['Content-Type'] = 'application/json';
+//     defaults.common['Accept'] = 'application/json';
+// }]);
 
 LaApp.config(function($stateProvider, $urlRouterProvider) {
   // For any unmatched url, redirect to start modal
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/start");
 
   // Sets up the states
   $stateProvider
@@ -16,7 +26,8 @@ LaApp.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state("signup", {
 			url: "/signup",
-			templateUrl: "../reveaLA-angular/partials/signup.html"
+			templateUrl: "../reveaLA-angular/partials/signup.html",
+      controller: 'UserCtrl'
 		})
 		.state("signin", {
 			url: "/signin",
@@ -37,9 +48,8 @@ LaApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 LaApp.factory('User', ['$resource', function($resource) {
-  return $resource('107.170.214.225/users/:id',
-     {id: '@id'},
-     {update: { method: 'PUT'}});
+  return $resource('http://107.170.214.225/users/',
+     { method: 'GET'});
 }]);
 
 LaApp.controller('LaController', function ($scope) {
@@ -98,13 +108,65 @@ LaApp.controller('LaController', function ($scope) {
 			handleNoGeolocation(browserSupportFlag);
 		}
 
-		// function handleNoGeolocation(errorFlag) {
-		// 	if (errorFlag == true) {
-		// 		alert("Geolocation service failed.");
+		function handleNoGeolocation(errorFlag) {
+			if (errorFlag == true) {
+				alert("Geolocation service failed.");
 
-		// 	} else {
-		// 		alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
-		// 	}
-		// }
+			} else {
+				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
+			}
+		}
 	},30000);
 });
+
+LaApp.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
+    $scope.users= [];
+
+    $scope.newUser = new User();
+
+    User.query(function(users) {
+      $scope.users = users;
+   });
+
+    $scope.saveUser = function () {
+      $scope.newUser.$save(function(user) {
+        $scope.users.push(user)
+        $scope.newUser = new User();
+      });
+    }
+
+    // $scope.deleteYogurt = function (user) {
+    //   yogurt.$delete(function() {
+    //     position = $scope.users.indexOf(user);
+    //     $scope.users.splice(position, 1);
+    //   }, function(errors) {
+    //     $scope.errors = errors.data
+    //   });
+    // }
+
+    // $scope.showYogurt = function(user) {
+    //   yogurt.details = true;
+    //   yogurt.editing = false;
+    // }
+
+    // $scope.hideYogurt = function(user) {
+    //   yogurt.details = false;
+    // }
+
+    // $scope.editYogurt = function(user) {
+    //   yogurt.editing = true;
+    //   yogurt.details = false;
+    // }
+
+    // $scope.updateYogurt = function(user) {
+    //   yogurt.$update(function() {
+    //     yogurt.editing = false;
+    //   }, function(errors) {
+    //     $scope.errors = errors.data
+    //   });
+    // }
+
+    $scope.clearErrors = function() {
+      $scope.errors = null;
+    }
+}])
