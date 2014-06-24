@@ -157,11 +157,25 @@ and (max-width : 768px) {
   background-size: cover;
   background-position: center center;
   height: 750px;
+  position: relative;
 }
 
 #signup-container {
-  margin: 0 auto;
-  padding-top: 10%;
-  width: 50%;
+  margin-top: 7%;
+  margin-left: 65%;
+  width: 30%;
+  height: 65%;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  position: absolute;
+}
+
+#signup-header {
+  padding: 15px 0 15px 0;
+  font-size: 3.5em;
+}
+
+#signup-submit {
+  margin-top: 10px;
 }
