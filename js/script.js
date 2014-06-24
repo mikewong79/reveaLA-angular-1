@@ -52,12 +52,11 @@ LaApp.factory('User', ['$resource', function($resource) {
      { method: 'GET'});
 }]);
 
-
 LaApp.controller('LaController', function ($scope) {
 
 	function skrollr() {
-		var s = skrollr.init();
-	}
+    var s = skrollr.init();
+	};
 
 	function login(){
 		var onSuccessCallback = function(data) {

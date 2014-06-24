@@ -1,7 +1,22 @@
-
 .navbar {
 	background-color: lightblue;
 }
+
+.navigation .navbar {
+  background-color: black;
+  margin-bottom: 0px;
+}
+
+.navbar a {
+  color: white;
+}
+
+.navbar a:hover {
+  color: grey;
+}
+
+/* start.html styling */
+
 .row {
   background-repeat: no-repeat;
 }
@@ -87,18 +102,7 @@
   font-size: 70px;
 }
 
-.navigation .navbar {
-	background-color: black;
-  margin-bottom: 0px;
-}
-
-.navbar a {
-  color: white;
-}
-
-.navbar a:hover {
-  color: grey;
-}
+/* map.html styling */
 
 .angular-google-map-container {
   position:absolute;
@@ -111,4 +115,34 @@
   img {
     max-width: none;
   }
+}
+
+/* signin.html styling */
+
+#signin-background {
+  background-image: url("../images/santamonica_postcard.png");
+  background-size: cover;
+  height: 700px;
+}
+
+#signin-container {
+  margin: 0 auto;
+  padding-top: 25%;
+  width: 50%;
+  text-align: center;
+}
+
+/* signup.html styling */
+
+#signup-background {
+  background-image: url("../images/olverast_postcard.png");
+  background-size: cover;
+  height: 600px;
+}
+
+#signup-container {
+  margin: 0 auto;
+  padding-top: 10%;
+  width: 50%;
+  text-align: center;
 }
