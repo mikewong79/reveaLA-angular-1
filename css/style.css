@@ -1,7 +1,21 @@
-
 .navbar {
 	background-color: lightblue;
 }
+
+.navigation .navbar {
+  background-color: black;
+  margin-bottom: 0px;
+}
+
+.navbar a {
+  color: white;
+}
+
+.navbar a:hover {
+  color: grey;
+}
+
+/* start.html styling */
 .row {
   background-repeat: no-repeat;
 }
@@ -87,18 +101,7 @@
   font-size: 70px;
 }
 
-.navigation .navbar {
-	background-color: black;
-  margin-bottom: 0px;
-}
-
-.navbar a {
-  color: white;
-}
-
-.navbar a:hover {
-  color: grey;
-}
+/* map.html styling */
 
 .angular-google-map-container {
   position:absolute;
@@ -111,4 +114,11 @@
   img {
     max-width: none;
   }
+}
+
+/* signin.html styling */
+
+#signin-container {
+  margin: 25%;
+  width: 50%;
 }
