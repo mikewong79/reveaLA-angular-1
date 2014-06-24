@@ -1,18 +1,5 @@
-.navbar {
-	background-color: lightblue;
-}
-
-.navigation .navbar {
+.navbar-custom {
   background-color: black;
-  margin-bottom: 0px;
-}
-
-.navbar a {
-  color: white;
-}
-
-.navbar a:hover {
-  color: grey;
 }
 
 /* start.html styling */
@@ -23,7 +10,8 @@
 
 #row1 {
   background-image: url("../images/beach_postcard.png");
-  background-size: 100%;
+  background-size: cover;
+  background-position: center center;
   margin-left: 0px;
   margin-top: 25px;
   height: 675px;
@@ -32,7 +20,7 @@
 #start-textbox1 {
   width: 50%;
   margin-left: 25%;
-  margin-top: 25%;
+  margin-top: 15%;
 }
 
 #logo {
@@ -53,7 +41,7 @@
 /*  background-color: #F5F4D3;*/
   height: 680px;
   background-image: url("../images/wilshire_postcard.png");
-  background-size: 100%;
+  background-size: cover;
 }
 
 #start-textbox2 {
@@ -78,7 +66,7 @@
 #row3 {
   background-image: url("../images/hollywood_postcard.png");
   margin-left: 0px;
-  background-size: 100%;
+  background-size: cover;
   height: 680px;
 }
 
