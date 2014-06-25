@@ -43,18 +43,6 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 			templateUrl: "../reveaLA-angular/partials/signin.html",
 			controller: 'SignInCtrl'
 		})
-		.state("tutorial", {
-			url: "/tutorial",
-			templateUrl: "../reveaLA-angular/partials/tutorial.html"
-		})
-		.state("tourtype", {
-			url: "/tourtype",
-			templateUrl: "../reveaLA-angular/partials/tourtype.html"
-		})
-		.state("found", {
-			url: "/found",
-			templateUrl: "../reveaLA-angular/partials/found.html"
-		});
 });
 
 LaApp.controller('LaController', function ($scope) {
@@ -64,12 +52,24 @@ LaApp.controller('LaController', function ($scope) {
 });
 
 LaApp.factory('Spot', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/spots/',
-    {update: { method: 'GET'}});
+  return $resource('http://107.170.214.225/spots');
 }]);
 
-LaApp.controller('MapCtrl', function ($scope) {
+LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot, $state) {
 
+	$scope.spots = [];
+	$scope.spotMarkers = [];
+
+	Spot.query(function(spots) {
+      $scope.spots = spots;
+      for(var n=0; n < $scope.spots.length; n++) {
+      	$scope.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
+      	console.log($scope.spotMarkers[0].latitude, $scope.spotMarkers[0].longitude);
+      };
+   });
+
+	console.log($scope.spotMarkers);
+	
 	$scope.map = {
     control : {},
     center: {
@@ -77,10 +77,7 @@ LaApp.controller('MapCtrl', function ($scope) {
         longitude: -73
     },
     zoom: 16,
-    markers: [{
-			latitude: 45,
-			longitude: -73
-    }]
+    markers: $scope.spotMarkers
 	};
 
 	if (navigator.geolocation) {
@@ -121,7 +118,7 @@ LaApp.controller('MapCtrl', function ($scope) {
 			}
 		}
 	},30000);
-});
+}]);
 
 LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
   // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
