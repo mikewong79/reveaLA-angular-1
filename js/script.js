@@ -44,14 +44,6 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 			controller: 'SignInCtrl'
 		})
 
-		.state("tutorial", {
-			url: "/tutorial",
-			templateUrl: "/partials/tutorial.html"
-		})
-		.state("tourtype", {
-			url: "/tourtype",
-			templateUrl: "/partials/tourtype.html"
-		})
 		.state("found", {
 			url: "/found",
 			templateUrl: "/partials/found.html"
@@ -125,7 +117,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 				var userLocation = ({latitude: position.coords.latitude, longitude: position.coords.longitude});
 
 				// Calculates the distance between two spots using latitude and longitude (Haversine formula)
-				function distance(lat1, lon1, lat1, lon1) {
+				var distance = function(lat1, lon1, lat2, lon2) {
 					var R = 6371; // km (change this constant to get miles)
 					var dLat = (lat2-lat1) * Math.PI / 180;
 					var dLon = (lon2-lon1) * Math.PI / 180;
@@ -141,10 +133,10 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 
 				var userLocationLat = position.coords.latitude;
 				var userLocationLon = position.coords.longitude;
-				var nearestSpotLat = ???.latitude;
-				var nearestSpotLon = ???.longitude;
+				// var nearestSpotLat = ???.latitude;
+				// var nearestSpotLon = ???.longitude;
 				// Define nearestSpotLat & nearestSpotLon
-				function distance(userLocationLat, userLocationLon, nearestSpotLat, nearestSpotLon);
+				distance(userLocationLat, userLocationLon, nearestSpotLat, nearestSpotLon);
 
 				// Calculate distance between userLocation and nearestSpot, set it as newDistance
 				// lastDistance set as null outside of setInterval function so that it doesn't keep getting reset as null
