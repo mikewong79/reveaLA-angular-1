@@ -1,4 +1,8 @@
-<google-map center="map.center" zoom="map.zoom" draggable='true'>
-  <marker ng-repeat="m in map.markers track by $index" coords="m"></marker>
-  <marker ng-repeat="marker in map.spotMarkers track by $index" latitude="marker.latitude" coords="marker.latitude, marker.longitude"></marker>
-</google-map>
+<div id="map">
+	<google-map center="map.center" zoom="map.zoom" draggable='true'>
+	  <marker ng-repeat="m in map.userMarker track by $index" coords="m"></marker>
+	  <marker ng-repeat="n in map.spotMarkers track by $index" coords="n"></marker>
+	</google-map>
+</div>
+<div id="hot-alert">HOTTER</div>
+<div id="cold-alert">COLDER</div>

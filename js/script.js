@@ -71,35 +71,47 @@ LaApp.factory('Spot', ['$resource', function($resource) {
 
 LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot, $state) {
 
+	// Populated with all of the spots pulled in by the query
 	$scope.spots = [];
-	$scope.spotMarkers = [];
-
+	
+	// Pulling in the spots from the API
 	Spot.query(function(spots) {
-      $scope.spots = spots;
-      for(var n=0; n < $scope.spots.length; n++) {
-      	$scope.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
-      	console.log($scope.spotMarkers[0].latitude, $scope.spotMarkers[0].longitude);
-      };
+    $scope.spots = spots;
    });
 
-	console.log($scope.spotMarkers);
+	// setTimeout(function(){
+		// $scope.$apply(function(){
+		// 	$scope.map.newMarkers = $scope.spotMarkers;
+		// 	console.log($scope.map.newMarkers);
+  //   });
+	// }, 1000);
 
+	// Sets map
 	$scope.map = {
     control : {},
     center: {
         latitude: 45,
         longitude: -73
     },
-    zoom: 16,
-    markers: $scope.spotMarkers
+    zoom: 16
 	};
-
+	
+	// Uses geolocation to find user's current location
 	if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
       $scope.$apply(function(){
-				$scope.map.markers = [{latitude: position.coords.latitude, longitude: position.coords.longitude }];
+      	// userMarker places a marker at the user's current location
+				$scope.map.userMarker = [({latitude: position.coords.latitude, longitude: position.coords.longitude })];
 				$scope.map.center = {latitude: position.coords.latitude, longitude: position.coords.longitude };
 				console.log('Original Location Found');
+				// Populated with all of the spots' latitudes and longitudes
+				$scope.map.spotMarkers = [];
+				// Looping through all of those spots and pulling out their latitude and longitude
+    		for(var n=0; n < $scope.spots.length; n++) {
+	  			$scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
+				};
+				console.log($scope.map.userMarker);
+				console.log($scope.map.spotMarkers);
       });
     });
   }
@@ -110,7 +122,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 			browserSupportFlag = true;
 			navigator.geolocation.getCurrentPosition(function(position) {
 				$scope.$apply(function(){
-					$scope.map.markers.push({latitude: position.coords.latitude, longitude: position.coords.longitude })
+					$scope.map.userMarker = [{latitude: position.coords.latitude, longitude: position.coords.longitude }];
 					console.log('New Location Found');
 				});
 			}, function() {
