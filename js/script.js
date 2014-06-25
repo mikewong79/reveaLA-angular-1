@@ -54,15 +54,11 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 LaApp.controller('LaController', function ($scope) {
 	function skrollr() {
     var s = skrollr.init();
-	};
+	}
 });
 
 LaApp.factory('Spot', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/spots');
-}]);
-
-LaApp.factory('ClosestSpot', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/spots/closest');
 }]);
 
 LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($scope, Spot, $state, $http) {
@@ -89,18 +85,18 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 	if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
       $scope.$apply(function(){
-        var currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude }
+        var currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
 
-      	// userMarker places a marker at the user's current location
+        // userMarker places a marker at the user's current location
 				$scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
 				// Populated with all of the spots' latitudes and longitudes
 				$scope.map.spotMarkers = [];
 				// Looping through all of those spots and pulling out their latitude and longitude
-    		for(var n=0; n < $scope.spots.length; n++) {
-	  			$scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
-				};
+        for(var n=0; n < $scope.spots.length; n++) {
+          $scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
+				}
         // Make http call to backend to find closet spot.
         $http.post('http://107.170.214.225/spots/closest', currentLatLng).success(function(){
           console.log(data);
@@ -151,19 +147,19 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 
 				// Calculate distance between userLocation and nearestSpot, set it as newDistance
 				// lastDistance set as null outside of setInterval function so that it doesn't keep getting reset as null
-				if (lastDistance = null) {
-					$scope.alert = start;
+				if (lastDistance == null) {
+          $scope.alert = "start";
+          lastDistance = newDistance;
+        } else if (newDistance >= lastDistance) {
+					$scope.alert = "cold";
 					lastDistance = newDistance;
-				} else if (newDistance >= lastDistance) {
-					$scope.alert = cold;
-					lastDistance = newDistance;
-				} else {
+        } else {
 					if (newDistance <= 0.5) {
 						// Show marker
 						// Re-query the database for the next closet spot, store it as nearestSpot
 						$scope.alert = null;
 					} else {
-						$scope.alert = hot;
+						$scope.alert = "hot";
 						lastDistance = newDistance;
 					};
 				};
@@ -187,17 +183,6 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 	},30000)
 
 }]);
-
-// LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
-//   // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
-// 	function login(){
-// 		var onSuccessCallback = function(data) {
-// 			$rootScope.currentUserSignedIn = true;
-// 		};
-// 		// Login function to the server comes here
-// 		$location.path('/map');
-// 	};
-// }]);
 
 LaApp.factory('User', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/user',
@@ -244,27 +229,38 @@ LaApp.factory('Session', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/session');
 }]);
 
-LaApp.controller('NewSessionCtrl', ['$scope', 'Session', '$state', function($scope, Session, $state) {
+// LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
+//   // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
+//  function login(){
+//    var onSuccessCallback = function(data) {
+//      $rootScope.currentUserSignedIn = true;
+//    };
+//    // Login function to the server comes here
+//    $location.path('/map');
+//  };
+// }]);
 
-  var sessionURL = "http://107.170.214.255/session";
+// LaApp.controller('NewSessionCtrl', ['$scope', 'Session', '$state', function($scope, Session, $state) {
 
-  $scope.newSession = {
-    password: "",
-    email: ""
-  };
+//   var sessionURL = "http://107.170.214.255/session";
 
-  $http({
-      method: 'POST',
-      url: sessionURL,
-      data: JSON.stringify({
-        password: $scope.sessionPassword,
-        email: $scope.sessionEmail,
-      })}).
-    success(function(data, status, headers, config) {
-      console.log("success!");
-    }).
-    error(function(data, status, headers, config) {
-      console.log("fail");
-    });
+//   $scope.newSession = {
+//     password: "",
+//     email: ""
+//   };
 
-}]);
+//   $http({
+//       method: 'POST',
+//       url: sessionURL,
+//       data: JSON.stringify({
+//         password: $scope.sessionPassword,
+//         email: $scope.sessionEmail,
+//       })}).
+//     success(function(data, status, headers, config) {
+//       console.log("success!");
+//     }).
+//     error(function(data, status, headers, config) {
+//       console.log("fail");
+//     });
+
+// }]);
