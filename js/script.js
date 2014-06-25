@@ -41,7 +41,7 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		.state("signin", {
 			url: "/signin",
 			templateUrl: "/partials/signin.html",
-			controller: 'SignInCtrl'
+			controller: 'NewSessionCtrl'
 		})
 
 		.state("tutorial", {
@@ -69,18 +69,22 @@ LaApp.factory('Spot', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/spots');
 }]);
 
-LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot, $state) {
+LaApp.factory('ClosestSpot', ['$resource', function($resource) {
+  return $resource('http://107.170.214.225/spots/closest');
+}]);
+
+LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($scope, Spot, $state, $http) {
 
 	$scope.spots = [];
 	$scope.spotMarkers = [];
 
 	Spot.query(function(spots) {
-      $scope.spots = spots;
-      for(var n=0; n < $scope.spots.length; n++) {
-      	$scope.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
-      	console.log($scope.spotMarkers[0].latitude, $scope.spotMarkers[0].longitude);
-      };
-   });
+    $scope.spots = spots;
+    for(var n=0; n < $scope.spots.length; n++) {
+      $scope.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
+      console.log($scope.spotMarkers[0].latitude, $scope.spotMarkers[0].longitude);
+    }
+  });
 
 	console.log($scope.spotMarkers);
 
@@ -97,9 +101,13 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 	if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
       $scope.$apply(function(){
-				$scope.map.markers = [{latitude: position.coords.latitude, longitude: position.coords.longitude }];
-				$scope.map.center = {latitude: position.coords.latitude, longitude: position.coords.longitude };
+        var currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude }
+				$scope.map.markers = [currentLatLng];
+				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
+        $http.post('http://107.170.214.225/spots/closest', currentLatLng).success(function(){
+          console.log(data);
+        });
       });
     });
   }
@@ -134,16 +142,16 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 	},30000);
 }]);
 
-LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
-  // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
-	function login(){
-		var onSuccessCallback = function(data) {
-			$rootScope.currentUserSignedIn = true;
-		};
-		// Login function to the server comes here
-		$location.path('/map');
-	};
-}]);
+// LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
+//   // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
+// 	function login(){
+// 		var onSuccessCallback = function(data) {
+// 			$rootScope.currentUserSignedIn = true;
+// 		};
+// 		// Login function to the server comes here
+// 		$location.path('/map');
+// 	};
+// }]);
 
 LaApp.factory('User', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/user',
@@ -151,12 +159,12 @@ LaApp.factory('User', ['$resource', function($resource) {
 }]);
 
 LaApp.controller('NewUserCtrl', ['$scope', 'User', '$state', function($scope, User, $state) {
+  console.log(User);
   $scope.users= [];
 
   User.query(function(users) {
     $scope.users = users;
   });
-
 
   $scope.newUser = new User();
 
@@ -184,4 +192,33 @@ LaApp.controller('EditUserCtrl', ['$scope', 'User', '$stateParams', '$state', fu
       $state.go('start');
     });
   };
+}]);
+
+LaApp.factory('Session', ['$resource', function($resource) {
+  return $resource('http://107.170.214.225/session');
+}]);
+
+LaApp.controller('NewSessionCtrl', ['$scope', 'Session', '$state', function($scope, Session, $state) {
+
+  var sessionURL = "http://107.170.214.255/session";
+
+  $scope.newSession = {
+    password: "",
+    email: ""
+  };
+
+  $http({
+      method: 'POST',
+      url: sessionURL,
+      data: JSON.stringify({
+        password: $scope.sessionPassword,
+        email: $scope.sessionEmail,
+      })}).
+    success(function(data, status, headers, config) {
+      console.log("success!");
+    }).
+    error(function(data, status, headers, config) {
+      console.log("fail");
+    });
+
 }]);
