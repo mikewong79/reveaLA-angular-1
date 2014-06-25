@@ -104,11 +104,9 @@
 }
 
 #start-textbox3 {
-  width: 50%;
-  margin-left: 25%;
-  margin-top: 13%;
-  text-align: center;
   font-size: 40px;
+  text-align: center;
+  margin-top: 10%;
 }
 
 #start-textbox3 a {
@@ -117,6 +115,23 @@
 
 #start-textbox3 a:hover {
   color: white;
+}
+
+#textbox3-signin{
+  width: 30%;
+  float: left;
+}
+
+#textbox3-signup{
+  width: 30%;
+  margin-left: 30%;
+  clear: both;
+}
+
+#textbox3-getstarted{
+  clear: both;
+  width: 40%;
+  float: right;
 }
 
 #get-started {
