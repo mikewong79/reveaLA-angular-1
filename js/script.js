@@ -117,6 +117,8 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     });
   }
 
+  var browserSupportFlag = new Boolean();
+
   setInterval(function(){
     // Try W3C Geolocation (Preferred)
     if(navigator.geolocation) {

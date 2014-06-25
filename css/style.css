@@ -111,11 +111,9 @@
   position: relative;
 }
 
-#map-clips {
-}
-
 #colder {
   float: right;
+  display: inline-block !important;
   margin-right: 10%;
   position: relative;
 }
@@ -124,14 +122,17 @@
   margin-left: 10%;
   float: left;
   position: relative;
+  display: inline-block !important;
 }
 
 #hot-map {
   width: 100px;
+  height: 100px;
 }
 
 #cold-map {
   width: 100px;
+  height: 100px;
 }
 
 #marker-img {
