@@ -1,11 +1,23 @@
+'use strict';
+
 var LaApp = angular.module('LaApp', ["ui.router", "mgcrea.ngStrap", 'mgcrea.ngStrap.modal', 'google-maps', 'ngResource']);
 
 LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  var defaults = $httpProvider.defaults.headers;
+  // var defaults = $httpProvider.defaults.headers;
 
-  defaults.patch = defaults.patch || {};
-  defaults.patch['Content-Type'] = 'application/json';
-  defaults.common['Accept'] = 'application/json';
+  // defaults.patch = defaults.patch || {};
+  // defaults.patch['Content-Type'] = 'application/json';
+  // defaults.post['Content-Type'] = 'application/json';
+  // defaults.common['Accept'] = 'application/json';
+
+
+  //Reset headers to avoid OPTIONS request (aka preflight)
+  // $httpProvider.defaults.headers.common = {};
+  // $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+  // $httpProvider.defaults.headers.post = {};
+  // $httpProvider.defaults.headers.put = {};
+  // $httpProvider.defaults.headers.patch = {};
+  // delete $httpProvider.defaults.headers.common["X-Requested-With"];
 
   // For any unmatched url, redirect to start modal
   $urlRouterProvider.otherwise("/start");
@@ -131,50 +143,35 @@ LaApp.factory('User', ['$resource', function($resource) {
 LaApp.controller('NewUserCtrl', ['$scope', 'User', '$state', function($scope, User, $state) {
   $scope.users= [];
 
-  $scope.newUser = new User();
-
   User.query(function(users) {
     $scope.users = users;
- 	});
+  });
 
-  $scope.saveUser = function () {
-    $scope.newUser.$save(function(user) {
+
+  $scope.newUser = new User();
+
+  $scope.saveUser = function() {
+    console.log($scope.newUser);
+    $scope.newUser.$save(function() {
       $state.go('start');
     });
-  }
+  };
+}]);
 
-  // $scope.deleteYogurt = function (user) {
-  //   yogurt.$delete(function() {
-  //     position = $scope.users.indexOf(user);
-  //     $scope.users.splice(position, 1);
-  //   }, function(errors) {
-  //     $scope.errors = errors.data
-  //   });
-  // }
+LaApp.controller('ShowUserCtrl', ['$scope', 'User', '$stateParams', function($scope, User, $stateParams) {
+  User.get({id: $stateParams.id}, function(user) {
+    $scope.user = user;
+  });
+}]);
 
-  // $scope.showYogurt = function(user) {
-  //   yogurt.details = true;
-  //   yogurt.editing = false;
-  // }
+LaApp.controller('EditUserCtrl', ['$scope', 'User', '$stateParams', '$state', function($scope, User, $stateParams, $state) {
+  User.get({id: $stateParams.id}, function(user) {
+    $scope.user = user;
+  });
 
-  // $scope.hideYogurt = function(user) {
-  //   yogurt.details = false;
-  // }
-
-  // $scope.editYogurt = function(user) {
-  //   yogurt.editing = true;
-  //   yogurt.details = false;
-  // }
-
-  // $scope.updateYogurt = function(user) {
-  //   yogurt.$update(function() {
-  //     yogurt.editing = false;
-  //   }, function(errors) {
-  //     $scope.errors = errors.data
-  //   });
-  // }
-
-  $scope.clearErrors = function() {
-    $scope.errors = null;
-  }
-}])
+  $scope.update = function() {
+    $scope.user.$update(function() {
+      $state.go('start');
+    });
+  };
+}]);
