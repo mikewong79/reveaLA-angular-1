@@ -26,30 +26,30 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 		.state("map", {
 			url: "/map",
-			templateUrl: "../reveaLA-angular/partials/map.html",
+			templateUrl: "/partials/map.html",
 			controller: 'MapCtrl'
 		})
 		.state("start", {
 			url: "/start",
-			templateUrl: "../reveaLA-angular/partials/start.html"
+			templateUrl: "/partials/start.html"
 		})
 		.state("signup", {
 			url: "/signup",
-			templateUrl: "../reveaLA-angular/partials/signup.html",
+			templateUrl: "/partials/signup.html",
       controller: 'NewUserCtrl'
 		})
 		.state("signin", {
 			url: "/signin",
-			templateUrl: "../reveaLA-angular/partials/signin.html",
+			templateUrl: "/partials/signin.html",
 			controller: 'SignInCtrl'
 		})
 		.state("tutorial", {
 			url: "/tutorial",
-			templateUrl: "../reveaLA-angular/partials/tutorial.html"
+			templateUrl: "/partials/tutorial.html"
 		})
 		.state("tourtype", {
 			url: "/tourtype",
-			templateUrl: "../reveaLA-angular/partials/tourtype.html"
+			templateUrl: "/partials/tourtype.html"
 		})
 		.state("found", {
 			url: "/found",
@@ -135,8 +135,7 @@ LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
 }]);
 
 LaApp.factory('User', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/users/:id',
-    {id: '@id'},
+  return $resource('http://107.170.214.225/user',
     {update: { method: 'PATCH'}});
 }]);
 
