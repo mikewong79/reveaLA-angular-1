@@ -1,5 +1,32 @@
+* {
+  font-family: 'Puritan', sans-serif;
+}
+
 .navbar-custom {
   background-color: black;
+  font-family: 'Oswald', sans-serif;
+}
+
+.navbar-custom .hotter {
+  background-color: red;
+}
+
+.navbar-custom .colder {
+  background-color: blue;
+}
+
+.navbar-default .navbar-brand {
+  color: white;
+}
+
+#nav-logo {
+  font-family: 'Nova Round', cursive;
+  font-size: 2em;
+}
+
+.navlink {
+  font-size: 1.2em;
+  font-family: 'Oswald', sans-serif;
 }
 
 /* start.html styling */
@@ -15,18 +42,28 @@
   background-position: center center;
   margin-left: 0px;
   margin-top: 25px;
-  /*height: 675px;*/
+}
+
+#row1-text {
+  margin-top: 6%;
 }
 
 #start-textbox1 {
-  width: 50%;
-  margin-left: 25%;
-  margin-top: 15%;
+  width: 70%;
+  margin-left: 15%;
+  text-align: center;
+}
+
+#start-textbox1 p {
+  font-size: 2.5em;
+  font-family: 'Oswald', sans-serif;
 }
 
 #logo {
   text-align: center;
-  font-size: 100px;
+  font-family: 'Nova Round', cursive;
+  font-size: 10em;
+  margin-top: 6%;
 }
 
 #logo a {
@@ -39,8 +76,6 @@
 }
 
 #row2 {
-/*  background-color: #F5F4D3;*/
-  /*height: 680px;*/
   background-image: url("../images/santa_monica.png");
   background-size: cover;
   background-position: center center;
@@ -55,14 +90,59 @@
 .tutorial-box {
   width: 30%;
   display: inline-block;
+  background-color: rgba(255, 255, 255, 0.7);
+  height: 300px;
+  font-size: 1.5em;
+  padding-top: 1%;
 }
 
 #tutorial-3 {
   float: right;
+  position: relative;
+}
+
+#tutorial-2 {
+  margin-top: 15%;
+  position: relative;
 }
 
 #tutorial-1 {
   float: left;
+  position: relative;
+}
+
+#map-clips {
+}
+
+#colder {
+  float: right;
+  margin-right: 10%;
+  position: relative;
+}
+
+#hotter {
+  margin-left: 10%;
+  float: left;
+  position: relative;
+}
+
+#hot-map {
+  width: 100px;
+}
+
+#cold-map {
+  width: 100px;
+}
+
+#marker-img {
+  position: relative;
+  margin-top: 3%;
+  width: 40%;
+}
+
+#city-img {
+  position: relative;
+  width: 60%;
 }
 
 #row3 {
@@ -74,11 +154,10 @@
 }
 
 #start-textbox3 {
-  width: 50%;
-  margin-left: 25%;
-  margin-top: 13%;
+  font-size: 4em;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   text-align: center;
-  font-size: 40px;
+  margin-top: 7%;
 }
 
 #start-textbox3 a {
@@ -87,6 +166,23 @@
 
 #start-textbox3 a:hover {
   color: white;
+}
+
+#textbox3-signin{
+  width: 30%;
+  float: left;
+}
+
+#textbox3-signup{
+  width: 30%;
+  margin-left: 25%;
+  clear: both;
+}
+
+#textbox3-getstarted{
+  clear: both;
+  width: 50%;
+  float: right;
 }
 
 #get-started {
@@ -111,29 +207,127 @@
 /* signin.html styling */
 
 #signin-background {
-  background-image: url("../images/santa_monica.png");
+  background-image: url("../images/venice.png");
   background-size: cover;
+  background-position: center center;
   height: 700px;
+  position: relative;
 }
 
 #signin-container {
-  margin: 0 auto;
-  padding-top: 25%;
-  width: 50%;
+  margin-top: 10%;
+  margin-left: 62%;
+  width: 30%;
+  height: 50%;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  position: absolute;
+}
+
+#signin-header {
+  padding: 25px 0 25px 0;
+  font-size: 3.5em;
+  font-family: 'Oswald', sans-serif;
+}
+
+#signin-container p {
+  margin-top: 10px;
+}
+
+#signin-submit {
+  margin-top: 10px;
 }
 
 /* signup.html styling */
 
 #signup-background {
-  background-image: url("../images/olverast_postcard.png");
+  background-image: url("../images/lifeguard.png");
   background-size: cover;
-  height: 600px;
+  background-position: center center;
+  height: 750px;
+  position: relative;
 }
 
 #signup-container {
-  margin: 0 auto;
-  padding-top: 10%;
-  width: 50%;
+  margin-top: 10%;
+  margin-left: 65%;
+  width: 30%;
+  height: 65%;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  position: absolute;
+}
+
+#signup-header {
+  padding: 15px 0 15px 0;
+  font-size: 3.5em;
+  font-family: 'Oswald', sans-serif;
+}
+
+#signup-submit {
+  margin-top: 10px;
+}
+
+@media only screen 
+and (max-width : 200px) {
+  #logo {
+    font-size: 100px;
+  }
+}
+
+@media only screen 
+and (max-width : 768px) {
+  #signin-container {
+    width: 70%;
+    margin: 20% 15% 20% 15%;
+  }
+  #signup-container {
+    width: 60%;
+    margin: 20% 20% 20% 20%;
+  }
+  #logo {
+    margin-top: 15%;
+    font-size: 6em;
+  }
+
+  .tutorial-box {
+    clear: both;
+    margin: 5%;
+    width: 90%;
+    height: 150px;
+    font-size: 1em;
+  }
+
+  #marker-img {
+    width: 10%;
+  }
+
+  #city-img {
+    width: 20%
+  } 
+}
+
+@media only screen 
+and (max-width : 905px) {
+  #hotter {
+    margin-top: -10%;
+    font-size: 2em;
+    color: red;
+  }
+
+  #colder {
+    margin-top: -10%;
+    font-size: 2em;
+    color: blue;
+  }
+
+  #hot-map {
+    display: none;
+  }
+
+  #cold-map {
+    display: none;
+  }
 }

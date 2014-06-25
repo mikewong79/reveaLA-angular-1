@@ -1,34 +1,47 @@
 <!-- <button type="button" class="btn btn-lg btn-danger" data-animation="am-fade-and-slide-top" data-template="partials/signin.html" bs-modal="modal">Sign In</button> -->
 <div id="start-pg">
 	<div class="row" id="row1">
-		<div id="start-textbox1">
+		<div id="row1-text">
 			<div id="logo">
-				<a data-match-route="/map" href="#/map">ReveaLA</a>
+				<a data-match-route="/map" href="#/map">reveaLA</a>
+			</div>
+			<div id="start-textbox1">
+				<p>Hunt For LA's Best Hidden Spots</p>
 			</div>
 		</div>
 	</div>
 	<div class="row" id="row2">
 		<div id="start-textbox2">
 			<div class="tutorial-box" id="tutorial-1">
-				Step 1
+				Open the map and start your scavenger hunt<br>
+				<img id="city-img" src="/images/city.png">
 			</div>
 			<div class="tutorial-box" id="tutorial-2">
-				Step 2
+				<p>Find the nearest spot<p>
+				<p>reveaLA will show you<br>
+				if you are getting</p>
+				<div class="map-clips">
+					<div id="hotter" x-ng-show="hotter"><img id="hot-map" src="/images/hot_map.png"><br>Hotter</div>
+					<div id="colder" x-ng-show="colder"><img id="cold-map" src="/images/cold_map.png"><br>Colder</div>
+				</div>
 			</div>
 			<div class="tutorial-box" id="tutorial-3">
-				Step 3
+				Sign up to save your spots!<br>
+				<img id="marker-img" src="/images/map_marker.png">
 			</div>
 		</div>
 	</div>
 	<div class="row" id="row3">
 		<div id="start-textbox3">
-			<a data-match-route="/signin" href="#/signin">Sign in</a>
-			    ~    
-			<a data-match-route="/signup" href="#/signup">Sign up</a>
-			<br>
-			or
-			<br>
-			<a id="get-started" data-match-route="/map" href="#/map">Get Started!</a>
+			<div id="textbox3-signin">
+				<a data-match-route="/signin" href="#/signin">Sign in</a>
+			</div>
+			<div id="textbox3-signup">
+				<a data-match-route="/signup" href="#/signup">Sign up</a>
+			</div>
+			<div id="textbox3-getstarted">
+				or... <a id="get-started" data-match-route="/map" href="#/map">Get Started!</a>
+			</div>
 		</div>
 	</div>
 </div>
