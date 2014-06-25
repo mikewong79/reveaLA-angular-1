@@ -75,9 +75,10 @@ LaApp.factory('ClosestSpot', ['$resource', function($resource) {
 
 LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($scope, Spot, $state, $http) {
 
+	// Populated with all of the spots pulled in by the query
 	$scope.spots = [];
-	$scope.spotMarkers = [];
 
+	// Pulling in the spots from the API
 	Spot.query(function(spots) {
     $scope.spots = spots;
     for(var n=0; n < $scope.spots.length; n++) {
@@ -86,25 +87,33 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     }
   });
 
-	console.log($scope.spotMarkers);
-
+	// Sets map
 	$scope.map = {
     control : {},
     center: {
         latitude: 45,
         longitude: -73
     },
-    zoom: 16,
-    markers: $scope.spotMarkers
+    zoom: 16
 	};
 
+	// Uses geolocation to find user's current location
 	if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
       $scope.$apply(function(){
         var currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude }
-				$scope.map.markers = [currentLatLng];
+
+      	// userMarker places a marker at the user's current location
+				$scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
+				// Populated with all of the spots' latitudes and longitudes
+				$scope.map.spotMarkers = [];
+				// Looping through all of those spots and pulling out their latitude and longitude
+    		for(var n=0; n < $scope.spots.length; n++) {
+	  			$scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
+				};
+        // Make http call to backend to find closet spot.
         $http.post('http://107.170.214.225/spots/closest', currentLatLng).success(function(){
           console.log(data);
         });
@@ -118,7 +127,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 			browserSupportFlag = true;
 			navigator.geolocation.getCurrentPosition(function(position) {
 				$scope.$apply(function(){
-					$scope.map.markers.push({latitude: position.coords.latitude, longitude: position.coords.longitude })
+					$scope.map.userMarker = [{latitude: position.coords.latitude, longitude: position.coords.longitude }];
 					console.log('New Location Found');
 				});
 			}, function() {

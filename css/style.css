@@ -7,6 +7,14 @@
   font-family: 'Oswald', sans-serif;
 }
 
+.navbar-custom .hotter {
+  background-color: red;
+}
+
+.navbar-custom .colder {
+  background-color: blue;
+}
+
 .navbar-default .navbar-brand {
   color: white;
 }
@@ -68,8 +76,6 @@
 }
 
 #row2 {
-/*  background-color: #F5F4D3;*/
-  /*height: 680px;*/
   background-image: url("../images/santa_monica.png");
   background-size: cover;
   background-position: center center;
@@ -85,14 +91,58 @@
   width: 30%;
   display: inline-block;
   background-color: rgba(255, 255, 255, 0.7);
+  height: 300px;
+  font-size: 1.5em;
+  padding-top: 1%;
 }
 
 #tutorial-3 {
   float: right;
+  position: relative;
+}
+
+#tutorial-2 {
+  margin-top: 15%;
+  position: relative;
 }
 
 #tutorial-1 {
   float: left;
+  position: relative;
+}
+
+#map-clips {
+}
+
+#colder {
+  float: right;
+  margin-right: 10%;
+  position: relative;
+}
+
+#hotter {
+  margin-left: 10%;
+  float: left;
+  position: relative;
+}
+
+#hot-map {
+  width: 100px;
+}
+
+#cold-map {
+  width: 100px;
+}
+
+#marker-img {
+  position: relative;
+  margin-top: 3%;
+  width: 40%;
+}
+
+#city-img {
+  position: relative;
+  width: 60%;
 }
 
 #row3 {
@@ -104,11 +154,10 @@
 }
 
 #start-textbox3 {
-  width: 50%;
-  margin-left: 25%;
-  margin-top: 13%;
+  font-size: 4em;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   text-align: center;
-  font-size: 40px;
+  margin-top: 7%;
 }
 
 #start-textbox3 a {
@@ -117,6 +166,23 @@
 
 #start-textbox3 a:hover {
   color: white;
+}
+
+#textbox3-signin{
+  width: 30%;
+  float: left;
+}
+
+#textbox3-signup{
+  width: 30%;
+  margin-left: 25%;
+  clear: both;
+}
+
+#textbox3-getstarted{
+  clear: both;
+  width: 50%;
+  float: right;
 }
 
 #get-started {
@@ -224,5 +290,44 @@ and (max-width : 768px) {
   #logo {
     margin-top: 15%;
     font-size: 6em;
+  }
+
+  .tutorial-box {
+    clear: both;
+    margin: 5%;
+    width: 90%;
+    height: 150px;
+    font-size: 1em;
+  }
+
+  #marker-img {
+    width: 10%;
+  }
+
+  #city-img {
+    width: 20%
+  } 
+}
+
+@media only screen 
+and (max-width : 905px) {
+  #hotter {
+    margin-top: -10%;
+    font-size: 2em;
+    color: red;
+  }
+
+  #colder {
+    margin-top: -10%;
+    font-size: 2em;
+    color: blue;
+  }
+
+  #hot-map {
+    display: none;
+  }
+
+  #cold-map {
+    display: none;
   }
 }
