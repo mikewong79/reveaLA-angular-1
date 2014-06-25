@@ -1,7 +1,7 @@
 <div id="signup-background">
 
 	<div id="signup-container">
-		<h1>Sign Up</h1>
+		<h1 id="signup-header">Sign Up</h1>
 		<form ng-submit="saveUser();" class="form-group">
       <div >
         <label for="name">
@@ -21,17 +21,15 @@
 
         <label for="password">
           Password:
-          <input ng-model="newUser.password" name="password" class="form-control">
+          <input ng-model="newUser.password" name="password" type="password" class="form-control">
         </label>
 
         <label for="passwordConfirmation">
           Password Confirmation:
-          <input ng-model="newUser.password_confirmation" name="passwordConfirmation" class="form-control">
+          <input ng-model="newUser.password_confirmation" type= "password" name="passwordConfirmation" class="form-control">
         </label>
       </div>
-      <div class="padding">
-        <button type="submit" class="button button-block button-positive">Save!</button>
-      </div>
+      <button id="signup-submit" type="submit" class="button button-block button-positive">Save!</button>
     </form>
 	</div>
   {{users}}
