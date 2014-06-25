@@ -2,31 +2,31 @@
 
 	<div id="signup-container">
 		<h1 id="signup-header">Sign Up</h1>
-		<form ng-submit="saveUser();" class="form-group">
+		<form name="signUp" ng-submit="signUp.$valid" class="form-group" novalidate>
       <div >
         <label for="name">
           Name:
-          <input ng-model="newUser.name" name="name" class="form-control">
+          <input x-ng-model="newUser.name" name="name" class="form-control" required>
         </label>
         <br>
         <label for="username">
           Username:
-          <input ng-model="newUser.username" name="username" class="form-control">
+          <input x-ng-model="newUser.username" name="username" class="form-control" required>
         </label>
         <br>
         <label for="email">
           Email:
-          <input ng-model="newUser.email" name="email" class="form-control">
+          <input x-ng-model="newUser.email" name="email" type="email" class="form-control" required>
         </label>
         <br>
         <label for="password">
           Password:
-          <input ng-model="newUser.password" name="password" type="password" class="form-control">
+          <input x-ng-model="newUser.password" name="password" type="password" class="form-control" ng-minlength=8 ng-maxlength=20 required>
         </label>
         <br>
         <label for="passwordConfirmation">
           Password Confirmation:
-          <input ng-model="newUser.password_confirmation" type= "password" name="passwordConfirmation" class="form-control">
+          <input x-ng-model="newUser.password_confirmation" type= "password" name="passwordConfirmation" class="form-control" ng-minlength=8 ng-maxlength=20 required>
         </label>
       </div>
       <button id="signup-submit" type="submit" class="button button-block button-positive">Save!</button>

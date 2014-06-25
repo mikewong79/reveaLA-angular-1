@@ -2,16 +2,16 @@
 
 	<div id="signin-container">
 		<h1 id="signin-header">Sign In</h1>
-		<form ng-submit="signIn()" class="form-group" name="signIn" novalidate>
+		<form name="signIn" ng-submit="signIn.$valid" class="form-group" novalidate>
 
 			<label for="username">
 				Username:
-				<input type="text" ng-model="" name="username" class="form-control">
+				<input type="text" ng-model="session.username" name="username" class="form-control" required>
 			</label>
 			<br>
 			<label for="password">
 				Password:
-				<input type="password" ng-model="" name="password" class="form-control">
+				<input type="password" ng-model="session.password" name="password" class="form-control" ng-minlength=8 ng-maxlength=20 required>
 			</label>
 			<br>
 			<button id="signin-submit" type="submit" class="button button-block button-positive">Submit</button>

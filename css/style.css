@@ -240,6 +240,13 @@
   margin-top: 10px;
 }
 
+input.ng-invalid {
+  border: 1.5px solid red;
+}
+input.ng-valid {
+  border: 1.5px solid green;
+}
+
 /* signup.html styling */
 
 #signup-background {
