@@ -26,23 +26,37 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 		.state("map", {
 			url: "/map",
-			templateUrl: "../reveaLA-angular/partials/map.html",
+			templateUrl: "/partials/map.html",
 			controller: 'MapCtrl'
 		})
 		.state("start", {
 			url: "/start",
-			templateUrl: "../reveaLA-angular/partials/start.html"
+			templateUrl: "/partials/start.html"
 		})
 		.state("signup", {
 			url: "/signup",
-			templateUrl: "../reveaLA-angular/partials/signup.html",
+			templateUrl: "/partials/signup.html",
       controller: 'NewUserCtrl'
 		})
 		.state("signin", {
 			url: "/signin",
-			templateUrl: "../reveaLA-angular/partials/signin.html",
+			templateUrl: "/partials/signin.html",
 			controller: 'SignInCtrl'
 		})
+
+		.state("tutorial", {
+			url: "/tutorial",
+			templateUrl: "/partials/tutorial.html"
+		})
+		.state("tourtype", {
+			url: "/tourtype",
+			templateUrl: "/partials/tourtype.html"
+		})
+		.state("found", {
+			url: "/found",
+			templateUrl: "/partials/found.html"
+		});
+
 });
 
 LaApp.controller('LaController', function ($scope) {
@@ -69,7 +83,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
    });
 
 	console.log($scope.spotMarkers);
-	
+
 	$scope.map = {
     control : {},
     center: {
@@ -132,8 +146,7 @@ LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
 }]);
 
 LaApp.factory('User', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/users/:id',
-    {id: '@id'},
+  return $resource('http://107.170.214.225/user',
     {update: { method: 'PATCH'}});
 }]);
 
