@@ -108,6 +108,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
   }
 
 	var lastDistance = null;
+  var browserSupportFlag = new Boolean();
 
   // Keep checking current location
   setInterval(function(){
