@@ -75,16 +75,12 @@ LaApp.factory('ClosestSpot', ['$resource', function($resource) {
 
 LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($scope, Spot, $state, $http) {
 
-	// Populated with all of the spots pulled in by the query
+	// Create empty array that we can populate with all of the spots pulled in by the query
 	$scope.spots = [];
 
 	// Pulling in the spots from the API
 	Spot.query(function(spots) {
     $scope.spots = spots;
-    for(var n=0; n < $scope.spots.length; n++) {
-      $scope.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
-      console.log($scope.spotMarkers[0].latitude, $scope.spotMarkers[0].longitude);
-    }
   });
 
 	// Sets map
