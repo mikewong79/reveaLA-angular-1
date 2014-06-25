@@ -79,13 +79,6 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
     $scope.spots = spots;
    });
 
-	// setTimeout(function(){
-		// $scope.$apply(function(){
-		// 	$scope.map.newMarkers = $scope.spotMarkers;
-		// 	console.log($scope.map.newMarkers);
-  //   });
-	// }, 1000);
-
 	// Sets map
 	$scope.map = {
     control : {},
@@ -110,12 +103,13 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
     		for(var n=0; n < $scope.spots.length; n++) {
 	  			$scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
 				};
-				console.log($scope.map.userMarker);
-				console.log($scope.map.spotMarkers);
       });
     });
   }
 
+	var lastDistance = null;
+
+  // Keep checking current location
   setInterval(function(){
     // Try W3C Geolocation (Preferred)
     if(navigator.geolocation) {
@@ -125,6 +119,50 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 					$scope.map.userMarker = [{latitude: position.coords.latitude, longitude: position.coords.longitude }];
 					console.log('New Location Found');
 				});
+				// Query db for closest spot and store it as nearestSpot
+				// userLocation = position.coords.lat, position.coords.lon
+				var userLocation = ({latitude: position.coords.latitude, longitude: position.coords.longitude});
+
+				// Calculates the distance between two spots using latitude and longitude (Haversine formula)
+				function distance(lat1, lon1, lat1, lon1) {
+					var R = 6371; // km (change this constant to get miles)
+					var dLat = (lat2-lat1) * Math.PI / 180;
+					var dLon = (lon2-lon1) * Math.PI / 180;
+					var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+						Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+						Math.sin(dLon/2) * Math.sin(dLon/2);
+					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+					var newDistance = R * c;
+					if (newDistance>1) return Math.round(d)+"km";
+					else if (newDistance<=1) return Math.round(d*1000)+"m";
+					return newDistance;
+				};
+
+				var userLocationLat = position.coords.latitude;
+				var userLocationLon = position.coords.longitude;
+				var nearestSpotLat = ???.latitude;
+				var nearestSpotLon = ???.longitude;
+				// Define nearestSpotLat & nearestSpotLon
+				function distance(userLocationLat, userLocationLon, nearestSpotLat, nearestSpotLon);
+
+				// Calculate distance between userLocation and nearestSpot, set it as newDistance
+				// lastDistance set as null outside of setInterval function so that it doesn't keep getting reset as null
+				if (lastDistance = null) {
+					$scope.alert = start;
+					lastDistance = newDistance;
+				} else if (newDistance >= lastDistance) {
+					$scope.alert = cold;
+					lastDistance = newDistance;
+				} else {
+					if (newDistance <= 0.5) {
+						// Show marker
+						// Re-query the database for the next closet spot, store it as nearestSpot
+						$scope.alert = null;
+					} else {
+						$scope.alert = hot;
+						lastDistance = newDistance;
+					};
+				};
 			}, function() {
 				handleNoGeolocation(browserSupportFlag);
 			});
@@ -133,17 +171,17 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', function ($scope, Spot,
 		else {
 			browserSupportFlag = false;
 			handleNoGeolocation(browserSupportFlag);
-		}
+		};
 
 		function handleNoGeolocation(errorFlag) {
 			if (errorFlag == true) {
 				alert("Geolocation service failed.");
-
 			} else {
 				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
 			}
 		}
-	},30000);
+	},30000)
+
 }]);
 
 LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
