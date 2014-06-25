@@ -1,7 +1,9 @@
 <div id="map">
 	<google-map center="map.center" zoom="map.zoom" draggable='true'>
 	  <marker ng-repeat="m in map.userMarker track by $index" coords="m"></marker>
-	  <marker ng-repeat="n in map.spotMarkers track by $index" coords="n"></marker>
+	  <marker ng-repeat="n in map.spotMarkers track by $index" coords="n">
+	  	<window templateUrl="/partials/found.html" show="true"></window>
+		</marker>
 	</google-map>
 </div>
 <div id="start-alert" x-ng-show="alert == start">START!</div>

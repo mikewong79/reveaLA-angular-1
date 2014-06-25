@@ -44,14 +44,6 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 			controller: 'NewSessionCtrl'
 		})
 
-		.state("tutorial", {
-			url: "/tutorial",
-			templateUrl: "/partials/tutorial.html"
-		})
-		.state("tourtype", {
-			url: "/tourtype",
-			templateUrl: "/partials/tourtype.html"
-		})
 		.state("found", {
 			url: "/found",
 			templateUrl: "/partials/found.html"
@@ -153,8 +145,9 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				var userLocationLon = position.coords.longitude;
 				// var nearestSpotLat = ???.latitude;
 				// var nearestSpotLon = ???.longitude;
-        // Define nearestSpotLat & nearestSpotLon
-				function distance(userLocationLat, userLocationLon, nearestSpotLat, nearestSpotLon);
+
+				// Define nearestSpotLat & nearestSpotLon
+				distance(userLocationLat, userLocationLon, nearestSpotLat, nearestSpotLon);
 
 				// Calculate distance between userLocation and nearestSpot, set it as newDistance
 				// lastDistance set as null outside of setInterval function so that it doesn't keep getting reset as null
