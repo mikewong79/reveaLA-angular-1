@@ -86,6 +86,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
   var currentLatLng;
   var lastDistance;
   var browserSupportFlag;
+  var spotsFound = [0];
   var distance = function(lat1, lon1, lat2, lon2) {
     var R = 6371; // km (change this constant to get miles)
     var dLat = (lat2-lat1) * Math.PI / 180;
@@ -108,7 +109,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
         currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
 
         // userMarker places a marker at the user's current location
-				$scope.map.userMarker = [(currentLatLng)];
+				// $scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
 				// Populated with all of the spots' latitudes and longitudes
@@ -118,7 +119,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     //       $scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
 				// }
         // Make http call to backend to find closet spot.
-        var requestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: 3 };
+        var requestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: 0, found_spots: spotsFound };
         $http.post('http://107.170.214.225/closest', requestData).success(function(data){
           console.log(newDistance);
           console.log(data);
@@ -148,37 +149,37 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
-          if (newDistance >= lastDistance) {
-            $scope.alert = "cold";
-            console.log('cold');
-            lastDistance = newDistance;
-          } else {
-            if (newDistance <= 0.5) {
-              // Show marker
-              // Re-query the database for the next closet spot, store it as nearestSpot
-              $scope.alert = null;
-              $scope.map.spotMarkers.push({latitude: nearestSpot.latitude, longitude: nearestSpot.longitude });
-              console.log("Found It!!!, do you see a marker?");
-              var newRequestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: nearestSpot.spot_id };
-              $http.post('http://107.170.214.225/closest', newRequestData).success(function(data){
-                console.log(newDistance);
-                console.log(data);
-                nearestSpot = data;
-                lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
-                console.log(newDistance);
-                console.log(lastDistance);
-              });
-
-
-            } else {
-              $scope.alert = "hot";
-              console.log('hot');
+          if (Math.abs(newDistance-lastDistance) > 0.05) {
+            if (newDistance >= lastDistance) {
+              $scope.alert = "cold";
+              console.log('cold');
               lastDistance = newDistance;
+            } else {
+              if (newDistance <= 0.1) {
+                // Show marker
+                // Re-query the database for the next closet spot, store it as nearestSpot
+                $scope.alert = null;
+                $scope.map.spotMarkers.push({latitude: nearestSpot.latitude, longitude: nearestSpot.longitude });
+                console.log("Found It!!!, do you see a marker?");
+                spotsFound.push(nearestSpot.spot_id);
+                var newRequestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: nearestSpot.spot_id, found_spots: spotsFound };
+                $http.post('http://107.170.214.225/closest', newRequestData).success(function(data){
+                  console.log(newDistance);
+                  console.log(data);
+                  nearestSpot = data;
+                  lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
+                  console.log(newDistance);
+                  console.log(lastDistance);
+                });
+              } else {
+                $scope.alert = "hot";
+                console.log('hot');
+                lastDistance = newDistance;
+              };
             };
-          };
-
-
-
+          } else {
+            console.log('Move your ass!');
+          }
 				});
 				// Query db for closest spot and store it as nearestSpot
 				// userLocation = position.coords.lat, position.coords.lon
