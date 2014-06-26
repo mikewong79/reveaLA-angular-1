@@ -57,6 +57,7 @@ LaApp.controller('LaController', function ($scope) {
 	}
 });
 
+
 LaApp.factory('Spot', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/spots');
 }]);
@@ -79,7 +80,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
         latitude: 45,
         longitude: -73
     },
-    zoom: 16
+    zoom: 18
 	};
   $scope.urlMarker = "http://reveala.s3-website-us-west-2.amazonaws.com/images/resizedmarker.png"
   // Calculates the distance between two spots using latitude and longitude (Haversine formula)
@@ -160,7 +161,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           console.log(newDistance);
           console.log(lastDistance);
 
-          if (Math.abs(newDistance-lastDistance) > 0) {
+          if (Math.abs(newDistance-lastDistance) > 0.007) {
             if (newDistance >= lastDistance) {
               navAlert.innerHTML = 'COLDER';
               navAlert.style.color = 'blue';
@@ -224,7 +225,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
 			}
 		}
-	},1000)
+	},500)
 
 }]);
 
