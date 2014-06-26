@@ -61,6 +61,7 @@ LaApp.factory('Spot', ['$resource', function($resource) {
   return $resource('http://107.170.214.225/spots');
 }]);
 
+
 LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($scope, Spot, $state, $http) {
 
 	// // Create empty array that we can populate with all of the spots pulled in by the query
@@ -70,7 +71,8 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 	// Spot.query(function(spots) {
  //    $scope.spots = spots;
  //  });
-
+  $scope.alertTime = false;
+  
 	// Sets map
 	$scope.map = {
     control : {},
@@ -103,6 +105,11 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
   };
 
   var navAlert = document.getElementById("nav-alert");
+  // console.log(navAlert.innerHTML);
+  // if (navAlert.innerHTML = null) {
+  //   navAlert.style.display = "none";
+  //   console.log(navAlert.innerHTML);
+  // };
 
 	// Uses geolocation to find user's current location
 	if (navigator.geolocation) {
@@ -115,11 +122,13 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
         navAlert.innerHTML = 'START';
+        $scope.alertTime = true;
         setTimeout(function(){
           navAlert.innerHTML = null;
         },5000);
     		// Populated with all of the spots' latitudes and longitudes
 				$scope.map.spotMarkers = [];
+
 				// // Looping through all of those spots and pulling out their latitude and longitude
     //     for(var n=0; n < $scope.spots.length; n++) {
     //       $scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
