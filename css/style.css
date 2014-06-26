@@ -109,6 +109,8 @@
 #tutorial-1 {
   float: left;
   position: relative;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 #colder {
@@ -138,12 +140,12 @@
 #marker-img {
   position: relative;
   margin-top: 3%;
-  width: 40%;
+  width: 35%;
 }
 
 #city-img {
   position: relative;
-  width: 60%;
+  width: 65%;
 }
 
 #row3 {
@@ -258,7 +260,7 @@ input.ng-valid {
 }
 
 #signup-container {
-  margin-top: 10%;
+  margin-top: 8%;
   margin-left: 65%;
   width: 30%;
   height: 65%;
@@ -304,13 +306,23 @@ and (max-width : 768px) {
 
   .tutorial-box {
     clear: both;
-    margin: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
     width: 90%;
-    height: 150px;
-    font-size: 1em;
+    height: 160px;
+    font-size: 1.25em;
+  }
+
+  #tutorial-2 {
+    margin-top: 5%;
+  }
+
+  #tutorial-3 {
+    margin-top: 5%;
   }
 
   #marker-img {
+    margin-top: 1%;
     width: 10%;
   }
 
@@ -322,15 +334,17 @@ and (max-width : 768px) {
 @media only screen 
 and (max-width : 905px) {
   #hotter {
-    margin-top: -10%;
+    margin-top: -15%;
     font-size: 2em;
-    color: red;
+    color: #E80000;
+    font-family: 'Oswald', sans-serif;
   }
 
   #colder {
-    margin-top: -10%;
+    margin-top: -15%;
     font-size: 2em;
-    color: blue;
+    color: #0066CC;
+    font-family: 'Oswald', sans-serif;
   }
 
   #hot-map {
@@ -339,5 +353,35 @@ and (max-width : 905px) {
 
   #cold-map {
     display: none;
+  }
+
+  #city-img {
+    width: 100px;
+  }
+
+  #marker-img {
+    width: 65px;
+  }
+  
+  #textbox3-signin{
+    font-size: 0.75em;
+    padding-top: 10%;
+  }
+
+  #textbox3-signup{
+    font-size: 0.75em;
+    width: 50%;
+    margin-left: 10%;
+    padding-top: 7%;
+  }
+
+  #textbox3-getstarted{
+    font-size: .9em;
+    width: 70%;
+    margin-right: 1%;
+  }
+
+  #get-started {
+    font-size: 70px;
   }
 }
