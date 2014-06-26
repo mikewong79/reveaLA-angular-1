@@ -114,8 +114,11 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				// $scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
-        navAlert.innerHTML = 'START!';
-				// Populated with all of the spots' latitudes and longitudes
+        navAlert.innerHTML = 'START';
+        setTimeout(function(){
+          navAlert.innerHTML = null;
+        },5000);
+    		// Populated with all of the spots' latitudes and longitudes
 				$scope.map.spotMarkers = [];
 				// // Looping through all of those spots and pulling out their latitude and longitude
     //     for(var n=0; n < $scope.spots.length; n++) {
@@ -127,7 +130,6 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           console.log(newDistance);
           console.log(data);
           nearestSpot = data;
-          navAlert.innerHTML = 'START';
           lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
@@ -150,13 +152,13 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           console.log(newDistance);
           console.log(lastDistance);
 
-          if (Math.abs(newDistance-lastDistance) > 0.02) {
+          if (Math.abs(newDistance-lastDistance) > 0.01) {
             if (newDistance >= lastDistance) {
               navAlert.innerHTML = 'COLDER';
               navAlert.style.color = 'blue';
               lastDistance = newDistance;
             } else {
-              if (newDistance <= 0.1) {
+              if (newDistance <= 0.05) {
                 // Show marker
                 // Re-query the database for the next closet spot, store it as nearestSpot
                 navAlert.innerHTML = nearestSpot.name;
@@ -214,7 +216,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
 			}
 		}
-	},10000)
+	},5000)
 
 }]);
 
