@@ -72,7 +72,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 	// Spot.query(function(spots) {
  //    $scope.spots = spots;
  //  });
-
+  
 	// Sets map
 	$scope.map = {
     control : {},
@@ -118,7 +118,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
       $scope.$apply(function(){
         currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
         // userMarker places a marker at the user's current location
-				$scope.map.userMarker = [(currentLatLng)];
+				// $scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
         navAlert.innerHTML = 'START';
@@ -154,15 +154,14 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 			navigator.geolocation.getCurrentPosition(function(position) {
 				$scope.$apply(function(){
           currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude};
-
+					$scope.map.userMarker = [(currentLatLng)];
+          $scope.map.center = currentLatLng;
 					console.log('New Location Found');
           distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
 
-          if (Math.abs(newDistance-lastDistance) > 0.001) {
-            $scope.map.userMarker = [(currentLatLng)];
-            $scope.map.center = currentLatLng;
+          if (Math.abs(newDistance-lastDistance) > 0.005) {
             if (newDistance >= lastDistance) {
               navAlert.innerHTML = 'COLDER';
               navAlert.style.color = 'blue';
@@ -226,7 +225,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
 			}
 		}
-	},1000)
+	},500)
 
 }]);
 
