@@ -5,11 +5,7 @@ A location-based interactive scavenger hunt for finding hidden and historical sp
 
 ##Find and discover
 
-Generate 
-
-##Make scavenger hunts for friends
-
-Filter spots by interest, save favorites, and craft hunts for your friends!
+		INSERT BRIEF
 
 ---
 
