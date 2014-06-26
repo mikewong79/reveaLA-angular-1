@@ -166,7 +166,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
               navAlert.style.color = 'blue';
               lastDistance = newDistance;
             } else {
-              if (newDistance <= 0.2) {
+              if (newDistance <= 0.05) {
                 // Show marker
                 // Re-query the database for the next closet spot, store it as nearestSpot
                 navAlert.innerHTML = nearestSpot.name;
