@@ -160,7 +160,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           console.log(newDistance);
           console.log(lastDistance);
 
-          if (Math.abs(newDistance-lastDistance) > 0.001) {
+          if (Math.abs(newDistance-lastDistance) > 0.005) {
             $scope.map.userMarker = [(currentLatLng)];
             $scope.map.center = currentLatLng;
             if (newDistance >= lastDistance) {
