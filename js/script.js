@@ -102,6 +102,8 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     // return newDistance;
   };
 
+  var navAlert = document.getElementById("nav-alert");
+
 	// Uses geolocation to find user's current location
 	if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
@@ -112,6 +114,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				// $scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
+        navAlert.innerHTML = 'START!';
 				// Populated with all of the spots' latitudes and longitudes
 				$scope.map.spotMarkers = [];
 				// // Looping through all of those spots and pulling out their latitude and longitude
@@ -124,6 +127,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           console.log(newDistance);
           console.log(data);
           nearestSpot = data;
+          navAlert.innerHTML = 'START';
           lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
@@ -131,9 +135,6 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
       });
     });
   }
-
-
-
 
   // Keep checking current location
   setInterval(function(){
@@ -145,20 +146,20 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude};
 					$scope.map.userMarker = [(currentLatLng)];
 					console.log('New Location Found');
-
           distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
-          if (Math.abs(newDistance-lastDistance) > 0.05) {
+
+          if (Math.abs(newDistance-lastDistance) > 0.02) {
             if (newDistance >= lastDistance) {
-              $scope.alert = "cold";
-              console.log('cold');
+              navAlert.innerHTML = 'COLDER';
+              navAlert.style.color = 'blue';
               lastDistance = newDistance;
             } else {
               if (newDistance <= 0.1) {
                 // Show marker
                 // Re-query the database for the next closet spot, store it as nearestSpot
-                $scope.alert = null;
+                navAlert.innerHTML = nearestSpot.name;
                 $scope.map.spotMarkers.push({latitude: nearestSpot.latitude, longitude: nearestSpot.longitude });
                 console.log("Found It!!!, do you see a marker?");
                 spotsFound.push(nearestSpot.spot_id);
@@ -172,8 +173,8 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
                   console.log(lastDistance);
                 });
               } else {
-                $scope.alert = "hot";
-                console.log('hot');
+                navAlert.innerHTML = 'HOTTER';
+                navAlert.style.color = 'red';
                 lastDistance = newDistance;
               };
             };
