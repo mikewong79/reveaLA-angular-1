@@ -63,13 +63,13 @@ LaApp.factory('Spot', ['$resource', function($resource) {
 
 LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($scope, Spot, $state, $http) {
 
-	// Create empty array that we can populate with all of the spots pulled in by the query
-	$scope.spots = [];
+	// // Create empty array that we can populate with all of the spots pulled in by the query
+	// $scope.spots = [];
 
-	// Pulling in the spots from the API
-	Spot.query(function(spots) {
-    $scope.spots = spots;
-  });
+	// // Pulling in the spots from the API
+	// Spot.query(function(spots) {
+ //    $scope.spots = spots;
+ //  });
 
 	// Sets map
 	$scope.map = {
@@ -80,12 +80,32 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     },
     zoom: 16
 	};
+  // Calculates the distance between two spots using latitude and longitude (Haversine formula)
+  var newDistance;
+  var nearestSpot;
+  var currentLatLng;
+  var lastDistance;
+  var browserSupportFlag;
+  var distance = function(lat1, lon1, lat2, lon2) {
+    var R = 6371; // km (change this constant to get miles)
+    var dLat = (lat2-lat1) * Math.PI / 180;
+    var dLon = (lon2-lon1) * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    newDistance = R * c;
+    return newDistance;
+    // if (newDistance>1) return Math.round(newDistance)+"km";
+    // else if (newDistance<=1) return Math.round(newDistance*1000)+"m";
+    // return newDistance;
+  };
 
 	// Uses geolocation to find user's current location
 	if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position){
       $scope.$apply(function(){
-        var currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
+        currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
 
         // userMarker places a marker at the user's current location
 				$scope.map.userMarker = [(currentLatLng)];
@@ -93,20 +113,26 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				console.log('Original Location Found');
 				// Populated with all of the spots' latitudes and longitudes
 				$scope.map.spotMarkers = [];
-				// Looping through all of those spots and pulling out their latitude and longitude
-        for(var n=0; n < $scope.spots.length; n++) {
-          $scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
-				}
+				// // Looping through all of those spots and pulling out their latitude and longitude
+    //     for(var n=0; n < $scope.spots.length; n++) {
+    //       $scope.map.spotMarkers.push({latitude: $scope.spots[n].latitude, longitude: $scope.spots[n].longitude });
+				// }
         // Make http call to backend to find closet spot.
-        $http.post('http://107.170.214.225/spots/closest', currentLatLng).success(function(){
+        var requestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: 3 };
+        $http.post('http://107.170.214.225/closest', requestData).success(function(data){
+          console.log(newDistance);
           console.log(data);
+          nearestSpot = data;
+          lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
+          console.log(newDistance);
+          console.log(lastDistance);
         });
       });
     });
   }
 
-	var lastDistance = null;
-  var browserSupportFlag = new Boolean();
+
+
 
   // Keep checking current location
   setInterval(function(){
@@ -115,54 +141,60 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 			browserSupportFlag = true;
 			navigator.geolocation.getCurrentPosition(function(position) {
 				$scope.$apply(function(){
-					$scope.map.userMarker = [{latitude: position.coords.latitude, longitude: position.coords.longitude }];
+          currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude};
+					$scope.map.userMarker = [(currentLatLng)];
 					console.log('New Location Found');
+
+          distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
+          console.log(newDistance);
+          console.log(lastDistance);
+          if (newDistance >= lastDistance) {
+            $scope.alert = "cold";
+            console.log('cold');
+            lastDistance = newDistance;
+          } else {
+            if (newDistance <= 0.5) {
+              // Show marker
+              // Re-query the database for the next closet spot, store it as nearestSpot
+              $scope.alert = null;
+              $scope.map.spotMarkers.push({latitude: nearestSpot.latitude, longitude: nearestSpot.longitude });
+              console.log("Found It!!!, do you see a marker?");
+              var newRequestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: nearestSpot.spot_id };
+              $http.post('http://107.170.214.225/closest', newRequestData).success(function(data){
+                console.log(newDistance);
+                console.log(data);
+                nearestSpot = data;
+                lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
+                console.log(newDistance);
+                console.log(lastDistance);
+              });
+
+
+            } else {
+              $scope.alert = "hot";
+              console.log('hot');
+              lastDistance = newDistance;
+            };
+          };
+
+
+
 				});
 				// Query db for closest spot and store it as nearestSpot
 				// userLocation = position.coords.lat, position.coords.lon
-				var userLocation = ({latitude: position.coords.latitude, longitude: position.coords.longitude});
 
-				// Calculates the distance between two spots using latitude and longitude (Haversine formula)
-				var distance = function(lat1, lon1, lat2, lon2) {
-					var R = 6371; // km (change this constant to get miles)
-					var dLat = (lat2-lat1) * Math.PI / 180;
-					var dLon = (lon2-lon1) * Math.PI / 180;
-					var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-						Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-						Math.sin(dLon/2) * Math.sin(dLon/2);
-					var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-					var newDistance = R * c;
-					if (newDistance>1) return Math.round(newDistance)+"km";
-					else if (newDistance<=1) return Math.round(newDistance*1000)+"m";
-					return newDistance;
-				};
 
-				var userLocationLat = position.coords.latitude;
-				var userLocationLon = position.coords.longitude;
+				// var userLocationLat = position.coords.latitude;
+				// var userLocationLon = position.coords.longitude;
 				// var nearestSpotLat = ???.latitude;
 				// var nearestSpotLon = ???.longitude;
 
 				// Define nearestSpotLat & nearestSpotLon
-				distance(userLocationLat, userLocationLon, nearestSpotLat, nearestSpotLon);
+
 
 				// Calculate distance between userLocation and nearestSpot, set it as newDistance
 				// lastDistance set as null outside of setInterval function so that it doesn't keep getting reset as null
-				if (lastDistance == null) {
-          $scope.alert = "start";
-          lastDistance = newDistance;
-        } else if (newDistance >= lastDistance) {
-					$scope.alert = "cold";
-					lastDistance = newDistance;
-        } else {
-					if (newDistance <= 0.5) {
-						// Show marker
-						// Re-query the database for the next closet spot, store it as nearestSpot
-						$scope.alert = null;
-					} else {
-						$scope.alert = "hot";
-						lastDistance = newDistance;
-					};
-				};
+
 			}, function() {
 				handleNoGeolocation(browserSupportFlag);
 			});
@@ -225,9 +257,23 @@ LaApp.controller('EditUserCtrl', ['$scope', 'User', '$stateParams', '$state', fu
   };
 }]);
 
-LaApp.factory('Session', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/session');
+LaApp.factory('MySession', ['$resource', function($resource) {
+  return $resource('http://107.170.214.225/session', {});
 }]);
+
+LaApp.controller('NewSessionCtrl', ['$scope', 'MySession', '$state', function($scope, MySession, $state) {
+
+  $scope.newSession = new MySession();
+
+  $scope.signIn = function() {
+    console.log($scope.newSession);
+    $scope.newSession.$save(function(data) {
+      console.log(data);
+      $state.go('start');
+    });
+  };
+}]);
+
 
 // LaApp.controller('SignInCtrl', ['$scope', '$state', function($scope, $state) {
 //   // MODIFY THIS FUNCTION FOR SIGN IN/SESSIONS
