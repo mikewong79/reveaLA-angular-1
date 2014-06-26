@@ -7,14 +7,6 @@
   font-family: 'Oswald', sans-serif;
 }
 
-.navbar-custom .hotter {
-  background-color: red;
-}
-
-.navbar-custom .colder {
-  background-color: blue;
-}
-
 .navbar-default .navbar-brand {
   color: white;
 }
@@ -22,6 +14,14 @@
 #nav-logo {
   font-family: 'Nova Round', cursive;
   font-size: 2em;
+  display: inline;
+}
+
+#nav-alert {
+  margin-left: 35%;
+  display: inline;
+  font-size: 2em;
+  font-family: 'Oswald', sans-serif;
 }
 
 .navlink {
