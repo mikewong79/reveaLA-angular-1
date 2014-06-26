@@ -71,7 +71,6 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 	// Spot.query(function(spots) {
  //    $scope.spots = spots;
  //  });
-  $scope.alertTime = false;
   
 	// Sets map
 	$scope.map = {
@@ -116,13 +115,11 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     navigator.geolocation.getCurrentPosition(function(position){
       $scope.$apply(function(){
         currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
-
         // userMarker places a marker at the user's current location
 				// $scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
         navAlert.innerHTML = 'START';
-        $scope.alertTime = true;
         setTimeout(function(){
           navAlert.innerHTML = null;
         },5000);
@@ -156,18 +153,19 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				$scope.$apply(function(){
           currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude};
 					$scope.map.userMarker = [(currentLatLng)];
+          $scope.map.center = currentLatLng;
 					console.log('New Location Found');
           distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
 
-          if (Math.abs(newDistance-lastDistance) > 0.01) {
+          if (Math.abs(newDistance-lastDistance) > 0) {
             if (newDistance >= lastDistance) {
               navAlert.innerHTML = 'COLDER';
               navAlert.style.color = 'blue';
               lastDistance = newDistance;
             } else {
-              if (newDistance <= 0.05) {
+              if (newDistance <= 0.2) {
                 // Show marker
                 // Re-query the database for the next closet spot, store it as nearestSpot
                 navAlert.innerHTML = nearestSpot.name;
@@ -225,7 +223,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
 			}
 		}
-	},5000)
+	},1000)
 
 }]);
 
