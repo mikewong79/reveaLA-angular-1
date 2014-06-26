@@ -1,13 +1,10 @@
 # ReveaLA Angular
----
 
 A location-based interactive scavenger hunt for finding hidden and historical spots in Los Angeles.
 
 ##Find and discover
 
 		INSERT BRIEF
-
----
 
 ###Additional components:
 
