@@ -144,7 +144,6 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
           currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude};
 					$scope.map.userMarker = [(currentLatLng)];
 					console.log('New Location Found');
-          navAlert.innerHTML = 'START';
           distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
@@ -208,7 +207,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				alert("Your browser doesn't support geolocation. We've placed you at beautiful GA");
 			}
 		}
-	},30000)
+	},10000)
 
 }]);
 
