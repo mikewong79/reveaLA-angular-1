@@ -118,7 +118,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
       $scope.$apply(function(){
         currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude };
         // userMarker places a marker at the user's current location
-				// $scope.map.userMarker = [(currentLatLng)];
+				$scope.map.userMarker = [(currentLatLng)];
 				$scope.map.center = currentLatLng;
 				console.log('Original Location Found');
         navAlert.innerHTML = 'START';
@@ -136,7 +136,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
         var requestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: 0, found_spots: spotsFound };
         $http.post('http://107.170.214.225/closest', requestData).success(function(data){
           console.log(newDistance);
-          console.log(data);
+          // console.log(data);
           nearestSpot = data;
           lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
@@ -154,14 +154,14 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 			navigator.geolocation.getCurrentPosition(function(position) {
 				$scope.$apply(function(){
           currentLatLng = {latitude: position.coords.latitude, longitude: position.coords.longitude};
-					$scope.map.userMarker = [(currentLatLng)];
-          $scope.map.center = currentLatLng;
 					console.log('New Location Found');
           distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
 
-          if (Math.abs(newDistance-lastDistance) > 0.005) {
+          if (Math.abs(newDistance-lastDistance) > 0.007) {
+            $scope.map.userMarker = [(currentLatLng)];
+            $scope.map.center = currentLatLng;
             if (newDistance >= lastDistance) {
               navAlert.innerHTML = 'COLDER';
               navAlert.style.color = 'blue';
