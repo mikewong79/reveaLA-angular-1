@@ -42,7 +42,7 @@
 }
 
 #row1 {
-  background-image: url("../images/manhattan_beach.png");
+  background-image: url("https://mikewong79.github.io/reveaLA-angular-1/manhattan_beach.png");
   background-size: cover;
   background-position: center center;
   margin-left: 0px;
@@ -81,7 +81,7 @@
 }
 
 #row2 {
-  background-image: url("../images/santa_monica.png");
+  background-image: url("https://mikewong79.github.io/reveaLA-angular-1/santa_monica.png");
   background-size: cover;
   background-position: center center;
 }
@@ -155,7 +155,7 @@
 }
 
 #row3 {
-  background-image: url("../images/griffith.png");
+  background-image: url("https://mikewong79.github.io/reveaLA-angular-1/griffith.png");
   margin-left: 0px;
   background-size: cover;
   background-position: center center;
@@ -216,7 +216,7 @@
 /* signin.html styling */
 
 #signin-background {
-  background-image: url("../images/venice.png");
+  background-image: url("https://mikewong79.github.io/reveaLA-angular-1/venice.png");
   background-size: cover;
   background-position: center center;
   height: 700px;
@@ -258,7 +258,7 @@ input.ng-valid {
 /* signup.html styling */
 
 #signup-background {
-  background-image: url("../images/lifeguard.png");
+  background-image: url("https://mikewong79.github.io/reveaLA-angular-1/lifeguard.png");
   background-size: cover;
   background-position: center center;
   height: 750px;
@@ -288,7 +288,7 @@ input.ng-valid {
 
 /* Media Queries */
 
-@media only screen 
+@media only screen
 and (max-width : 1150px) {
   #nav-alert {
     font-size: 1.65em;
@@ -296,14 +296,14 @@ and (max-width : 1150px) {
   }
 }
 
-@media only screen 
+@media only screen
 and (max-width : 200px) {
   #logo {
     font-size: 100px;
   }
 }
 
-@media only screen 
+@media only screen
 and (max-width : 768px) {
   #signin-container {
     width: 70%;
@@ -342,7 +342,7 @@ and (max-width : 768px) {
 
   #city-img {
     width: 20%;
-  } 
+  }
 
   #nav-alert {
     font-size: 1.4em;
@@ -350,7 +350,7 @@ and (max-width : 768px) {
   }
 }
 
-@media only screen 
+@media only screen
 and (max-width : 905px) {
   #hotter {
     margin-top: -15%;
@@ -381,7 +381,7 @@ and (max-width : 905px) {
   #marker-img {
     width: 65px;
   }
-  
+
   #textbox3-signin{
     font-size: 0.75em;
     padding-top: 10%;
