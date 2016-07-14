@@ -26,27 +26,27 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 		.state("map", {
 			url: "/map",
-			templateUrl: "/partials/map.html",
+			templateUrl: "../partials/map.html",
 			controller: 'MapCtrl'
 		})
 		.state("start", {
 			url: "/start",
-			templateUrl: "/partials/start.html"
+			templateUrl: "../partials/start.html"
 		})
 		.state("signup", {
 			url: "/signup",
-			templateUrl: "/partials/signup.html",
+			templateUrl: "../partials/signup.html",
       controller: 'NewUserCtrl'
 		})
 		.state("signin", {
 			url: "/signin",
-			templateUrl: "/partials/signin.html",
+			templateUrl: "../partials/signin.html",
 			controller: 'NewSessionCtrl'
 		})
 
 		.state("found", {
 			url: "/found",
-			templateUrl: "/partials/found.html"
+			templateUrl: "../partials/found.html"
 		});
 
 });
