@@ -26,27 +26,27 @@ LaApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 		.state("map", {
 			url: "/map",
-			templateUrl: "../partials/map.html",
+			templateUrl: "https://mikewong79.github.io/reveaLA-angular-1/partials/map.html",
 			controller: 'MapCtrl'
 		})
 		.state("start", {
 			url: "/start",
-			templateUrl: "../partials/start.html"
+			templateUrl: "https://mikewong79.github.io/reveaLA-angular-1/partials/start.html"
 		})
 		.state("signup", {
 			url: "/signup",
-			templateUrl: "../partials/signup.html",
+			templateUrl: "https://mikewong79.github.io/reveaLA-angular-1/partials/signup.html",
       controller: 'NewUserCtrl'
 		})
 		.state("signin", {
 			url: "/signin",
-			templateUrl: "../partials/signin.html",
+			templateUrl: "https://mikewong79.github.io/reveaLA-angular-1/partials/signin.html",
 			controller: 'NewSessionCtrl'
 		})
 
 		.state("found", {
 			url: "/found",
-			templateUrl: "../partials/found.html"
+			templateUrl: "https://mikewong79.github.io/reveaLA-angular-1/partials/found.html"
 		});
 
 });
