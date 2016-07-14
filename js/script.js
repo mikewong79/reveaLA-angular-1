@@ -59,7 +59,7 @@ LaApp.controller('LaController', function ($scope) {
 
 
 LaApp.factory('Spot', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/spots');
+  return $resource('https://reveala-rails.herokuapp.com/spots');
 }]);
 
 
@@ -72,7 +72,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 	// Spot.query(function(spots) {
  //    $scope.spots = spots;
  //  });
-  
+
 	// Sets map
 	$scope.map = {
     control : {},
@@ -134,7 +134,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				// }
         // Make http call to backend to find closet spot.
         var requestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: 0, found_spots: spotsFound };
-        $http.post('http://107.170.214.225/closest', requestData).success(function(data){
+        $http.post('https://reveala-rails.herokuapp.com/closest', requestData).success(function(data){
           console.log(newDistance);
           // console.log(data);
           nearestSpot = data;
@@ -175,7 +175,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
                 console.log("Found It!!!, do you see a marker?");
                 spotsFound.push(nearestSpot.spot_id);
                 var newRequestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: nearestSpot.spot_id, found_spots: spotsFound };
-                $http.post('http://107.170.214.225/closest', newRequestData).success(function(data){
+                $http.post('https://reveala-rails.herokuapp.com/closest', newRequestData).success(function(data){
                   console.log(newDistance);
                   console.log(data);
                   nearestSpot = data;
@@ -230,7 +230,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 }]);
 
 LaApp.factory('User', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/user',
+  return $resource('https://reveala-rails.herokuapp.com/user',
     {update: { method: 'PATCH'}});
 }]);
 
@@ -271,7 +271,7 @@ LaApp.controller('EditUserCtrl', ['$scope', 'User', '$stateParams', '$state', fu
 }]);
 
 LaApp.factory('MySession', ['$resource', function($resource) {
-  return $resource('http://107.170.214.225/session', {});
+  return $resource('https://reveala-rails.herokuapp.com/session', {});
 }]);
 
 LaApp.controller('NewSessionCtrl', ['$scope', 'MySession', '$state', function($scope, MySession, $state) {
