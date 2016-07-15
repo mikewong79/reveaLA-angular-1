@@ -82,7 +82,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
     },
     zoom: 18
 	};
-  $scope.urlMarker = "https://reveala.s3-website-us-west-2.amazonaws.com/images/resizedmarker.png"
+  $scope.urlMarker = "https://mikewong79.github.io/reveaLA-angular-1/images/resizedmarker.png"
   // Calculates the distance between two spots using latitude and longitude (Haversine formula)
   var newDistance;
   var nearestSpot;
