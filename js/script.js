@@ -89,7 +89,19 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
   var currentLatLng;
   var lastDistance;
   var browserSupportFlag;
-  var spotsFound = [0];
+  var spotsFound = [];
+  var findClosest = function(spots) {
+    var index = 0;
+    var closest = "";
+    while(closest == "" && index < spots.length) {
+      if(spotsFound.includes(spots[index].spot_id)) {
+        index++;
+      } else {
+        closest = spots[index];
+      }
+    }
+    return closest;
+  }
   var distance = function(lat1, lon1, lat2, lon2) {
     var R = 6371; // km (change this constant to get miles)
     var dLat = (lat2-lat1) * Math.PI / 180;
@@ -134,10 +146,11 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
 				// }
         // Make http call to backend to find closet spot.
         var requestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: 0, found_spots: spotsFound };
-        $http.post('https://reveala-rails.herokuapp.com/closest', requestData).success(function(data){
+        $http.post('https://reveala-rails.herokuapp.com/closest', requestData, {headers: {'Content-Type': 'application/json'}}).success(function(data){
           console.log(newDistance);
           // console.log(data);
-          nearestSpot = data;
+          nearestSpot = findClosest(data);
+          console.log("nearestSpot:", nearestSpot)
           lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
           console.log(newDistance);
           console.log(lastDistance);
@@ -178,7 +191,7 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
                 $http.post('https://reveala-rails.herokuapp.com/closest', newRequestData).success(function(data){
                   console.log(newDistance);
                   console.log(data);
-                  nearestSpot = data;
+                  nearestSpot = findClosest(data);
                   lastDistance = distance(currentLatLng.latitude, currentLatLng.longitude, nearestSpot.latitude, nearestSpot.longitude);
                   console.log(newDistance);
                   console.log(lastDistance);
