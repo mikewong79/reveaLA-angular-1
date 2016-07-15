@@ -187,8 +187,9 @@ LaApp.controller('MapCtrl', ['$scope', 'Spot', '$state', '$http', function ($sco
                 $scope.map.spotMarkers.push({latitude: nearestSpot.latitude, longitude: nearestSpot.longitude });
                 console.log("Found It!!!, do you see a marker?");
                 spotsFound.push(nearestSpot.spot_id);
+                console.log(spotsFound);
                 var newRequestData = {latitude: currentLatLng.latitude, longitude: currentLatLng.longitude, spot_id: nearestSpot.spot_id, found_spots: spotsFound };
-                $http.post('https://reveala-rails.herokuapp.com/closest', newRequestData).success(function(data){
+                $http.post('https://reveala-rails.herokuapp.com/closest', newRequestData, {headers: {'Content-Type': 'application/json'}}).success(function(data){
                   console.log(newDistance);
                   console.log(data);
                   nearestSpot = findClosest(data);
